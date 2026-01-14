@@ -15,8 +15,8 @@ return new class extends Migration
             $table->string('address');
             $table->string('zipcode', 9);
             $table->string('district', 100)->index();
-            $table->decimal('latitude', 10, 8);
-            $table->decimal('longitude', 11, 8);
+            $table->decimal('latitude', 10, 8)->index();
+            $table->decimal('longitude', 11, 8)->index();
             $table->foreignId('city_id')->nullable()->constrained()->nullOnDelete();
             $table->string('logo')->nullable();
             $table->string('whatsapp', 11)->unique()->index();
