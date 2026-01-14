@@ -25,6 +25,7 @@ class Customer extends Model
         'company_id',
         'name',
         'whatsapp',
+        'registered_by_user_id',
     ];
 
     public function companyVehicles(): HasMany
@@ -35,6 +36,11 @@ class Customer extends Model
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function registrar(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'registered_by_user_id');
     }
 
     public function user(): BelongsTo

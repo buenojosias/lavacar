@@ -63,6 +63,11 @@ class User extends Authenticatable
         return $this->hasMany(Customer::class);
     }
 
+    public function registeredCustomers(): HasMany
+    {
+        return $this->hasMany(Customer::class, 'registered_by_user_id');
+    }
+
     public function vehicles(): HasMany
     {
         return $this->hasMany(Vehicle::class);

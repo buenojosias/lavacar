@@ -11,7 +11,7 @@ class CompanyVehicleSeeder extends Seeder
 {
     public function run(): void
     {
-        $customers = Customer::whereNull('user_id')->get();
+        $customers = Customer::withoutGlobalScopes()->whereNull('user_id')->get();
 
         $models = collect([
             ['brand_model' => 'Fiat Mobi', 'size' => 'SM'],

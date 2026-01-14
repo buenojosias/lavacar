@@ -32,12 +32,14 @@ class VehicleSeeder extends Seeder
             'Cinza',
         ];
 
-        $users = User::where('role', 'CUSTOMER')->with('customers.company')->inRandomOrder()->take(8)->get();
+        $users = User::where('role', 'CUSTOMER')->with('customers.company', function($query) {
+            $query->withoutGlobalScopes();
+        })->get();
 
         foreach ($users as $user) {
             foreach ($user->customers as $customer) {
                 $vehicleModel = $models->random(1)->first();
-                $vehicle = Vehicle::create([
+                $vehicle = Vehicle::withoutGlobalScopes()->create([
                     'user_id' => $user->id,
                     'plate' => strtoupper(fake()->randomElement([fake()->bothify('???####'), fake()->bothify('???#?##')])),
                     'brand_model' => $vehicleModel['brand_model'],
@@ -45,7 +47,7 @@ class VehicleSeeder extends Seeder
                     'color' => $colors[array_rand($colors)],
                 ]);
 
-                $vehicle->companyVehicles()->create([
+                $vehicle->companyVehicles()->withoutGlobalScopes()->create([
                     'company_id' => $customer->company_id,
                     'customer_id' => $customer->id,
                     'nickname' => $vehicleModel['brand_model'].' '.$vehicleModel['size'].' ('.$vehicle->plate.')',

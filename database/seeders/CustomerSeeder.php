@@ -12,7 +12,7 @@ class CustomerSeeder extends Seeder
 {
     public function run(): void
     {
-        $companies = Company::all();
+        $companies = Company::with('users')->get();
         $users = User::where('role', 'CUSTOMER')->get();
 
         // Creating from users
@@ -32,8 +32,10 @@ class CustomerSeeder extends Seeder
 
         // Creating from companies
         $companies->each(function ($company) {
+            $registrar_id = $company->users->random()->id;
             Customer::factory(2)->create([
                 'company_id' => $company->id,
+                'registered_by_user_id' => $registrar_id,
             ]);
         });
     }
