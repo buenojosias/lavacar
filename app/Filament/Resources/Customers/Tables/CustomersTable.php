@@ -19,6 +19,7 @@ class CustomersTable
             ->columns([
                 TextColumn::make('name')->label('Nome')->searchable(),
                 TextColumn::make('whatsapp')->label('WhatsApp')->searchable(),
+                // TextColumn::make('vehicles_count')->label('Veículos')->counts('companyVehicles')->sortable(),
             ])
             ->filters([
                 // TrashedFilter::make(),
