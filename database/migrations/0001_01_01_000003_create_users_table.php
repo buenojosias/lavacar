@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('whatsapp', 15)->nullable()->unique();
+            $table->string('whatsapp', 20)->nullable()->unique();
             $table->enum('role', ['ADMIN', 'PARTNER', 'CUSTOMER'])->default('CUSTOMER');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

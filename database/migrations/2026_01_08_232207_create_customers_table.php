@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
             $table->string('name', 180)->index();
-            $table->string('whatsapp', 15)->index();
+            $table->string('whatsapp', 20)->index();
             $table->foreignId('registered_by_user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();

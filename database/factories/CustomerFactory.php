@@ -18,7 +18,7 @@ class CustomerFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'whatsapp' => fake()->phoneNumber(),
+            'whatsapp' => '+55419'.rand(82000000, 99999999),
         ];
     }
 }

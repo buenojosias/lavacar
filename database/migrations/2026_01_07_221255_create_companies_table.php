@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('longitude', 11, 8)->index();
             $table->foreignId('city_id')->nullable()->constrained()->nullOnDelete();
             $table->string('logo')->nullable();
-            $table->string('whatsapp', 11)->unique()->index();
+            $table->string('whatsapp', 20)->unique()->index();
             $table->integer('simultaneous_services')->default(1);
             $table->decimal('rating_avg', 2, 1)->nullable();
             $table->integer('rating_count')->default(0);
