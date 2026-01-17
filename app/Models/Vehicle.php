@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\VehicleSizeEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,6 +19,10 @@ class Vehicle extends Model
         'brand_model',
         'size',
         'color',
+    ];
+
+    protected $casts = [
+        'size' => VehicleSizeEnum::class,
     ];
 
     public function user(): BelongsTo

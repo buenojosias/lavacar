@@ -22,5 +22,8 @@ h2 {
     @apply font-semibold text-gray-800 dark:text-gray-200;
 }
 .detail dd {
-    @apply font-semibold text-gray-600 dark:text-gray-400;
+    @apply font-medium text-gray-500 dark:text-gray-400;
+}
+.detail .note {
+    @apply text-xs text-gray-400;
 }

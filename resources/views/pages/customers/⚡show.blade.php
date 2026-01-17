@@ -32,17 +32,17 @@ new class extends Component
 
 <div>
     <x-ts-card header="Detalhes do cliente" class="detail g-2">
-        <x-detail label="Nome" :value="$this->customer->name"></x-detail>
-        <x-detail label="WhatsApp" :value="$this->customer->whatsapp"></x-detail>
-        <x-detail label="Cadastrado por" :value="$this->customer->registrar->name ?? 'App'"></x-detail>
+        <x-detail label="Nome" :value="$this->customer->name" />
+        <x-detail label="WhatsApp" :value="$this->customer->whatsapp" />
+        <x-detail label="Cadastrado por" :value="$this->customer->registrar->name ?? 'App'" />
         @if (auth()->user()->role === 'ADMIN')
-            <x-detail label="Estabelecimento" :value="$this->customer->company->name"></x-detail>
+            <x-detail label="Estabelecimento" :value="$this->customer->company->name" url="#" />
         @endif
         <x-detail label="Tem aplicativo" :bool="isset($this->customer->user_id) ? 'Y' : 'N'" />
     </x-ts-card>
 
     <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <x-ts-card header="Veículos do cliente"></x-ts-card>
+        <livewire:customers.vehicles :customer="$this->customer" />
         <x-ts-card header="Agendamentos do cliente"></x-ts-card>
     </div>
 </div>
