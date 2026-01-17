@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="tallstackui_darkTheme()">
 
 <head>
     <meta charset="utf-8">
@@ -17,10 +17,13 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
+<body x-bind:class="{ 'dark bg-slate-800': darkTheme, 'bg-slate-50': !darkTheme }">
     <x-ts-layout>
         <x-slot:header>
             <x-ts-layout.header>
+                <x-slot:left>
+                    <x-ts-theme-switch only-icons />
+                </x-slot:left>
                 <x-slot:right>
                     <x-ts-dropdown text="Hello, {{ auth()->user()->name }}!">
                         <!-- <form method="POST" action="{{ route('logout') }}">

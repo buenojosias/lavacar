@@ -13,6 +13,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::livewire('/clientes', 'pages::customers.index')->name('customers.index');
+    Route::livewire('/clientes/{customer}', 'pages::customers.show')->name('customers.show');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
