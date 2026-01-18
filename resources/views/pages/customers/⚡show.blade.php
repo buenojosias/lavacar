@@ -42,7 +42,12 @@ new class extends Component
     </x-ts-card>
 
     <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <livewire:customers.vehicles :customer="$this->customer" />
+        @island(lazy: true)
+            @placeholder
+             <x-placeholder quantity="3" />
+            @endplaceholder
+            <livewire:customers.vehicles :customer="$this->customer" />
+        @endisland
         <x-ts-card header="Agendamentos do cliente"></x-ts-card>
     </div>
 </div>
