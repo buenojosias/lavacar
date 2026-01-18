@@ -18,6 +18,8 @@
 </head>
 
 <body x-bind:class="{ 'dark bg-slate-800': darkTheme, 'bg-slate-50': !darkTheme }">
+    <x-ts-toast />
+    <x-ts-dialog />
     <x-ts-layout>
         <x-slot:header>
             <x-ts-layout.header>
