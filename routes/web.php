@@ -9,6 +9,9 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::livewire('/dashboard', 'pages::dashboard')->name('dashboard');
+
+    Route::livewire('/estabelecimentos', 'pages::companies.index')->name('companies.index');
+
     Route::livewire('/clientes', 'pages::customers.index')->name('customers.index');
     Route::livewire('/clientes/{customer}', 'pages::customers.show')->name('customers.show');
 
