@@ -12,7 +12,7 @@ class CompanySeeder extends Seeder
 {
     public function run(): void
     {
-                $users = User::where('role', 'PARTNER')->get();
+        $users = User::where('role', 'PARTNER')->get();
 
         $companies = [
             [
@@ -73,12 +73,16 @@ class CompanySeeder extends Seeder
             ],
         ];
 
+        $user_id = 2;
+
         foreach ($companies as $company) {
             $company['is_visible'] = rand(0, 1);
             $company = Company::create($company);
-            $user = $users->random();
+            // $user = $users->random();
+            $user = User::find($user_id);
             $company->users()->attach($user->id, ['role' => CompanyRoleEnum::OWNER->value]);
             $user->update(['selected_company_id' => $company->id, 'selected_company_role' => 'OWNER']);
+            $user_id++;
         }
     }
 }

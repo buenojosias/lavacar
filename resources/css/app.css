@@ -5,6 +5,9 @@
 h2 {
     @apply mb-6 text-2xl font-bold dark:text-gray-300;
 }
+h3 {
+    @apply mb-4 text-xl font-semibold text-gray-700 dark:text-gray-400;
+}
 
 .detail {
     @apply gap-4 grid;

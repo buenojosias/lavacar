@@ -45,9 +45,10 @@ new class extends Component {
                             <div class="flex-1">
                                 <b>{{ \App\Enums\WeekdayEnum::from($day)->label() }}</b><br>
                                 <ul class="ml-2">
-                                @foreach ($hours as $hour)
-                                    <li>{{ $hour->opens_at->format('H:i') }} - {{ $hour->closes_at->format('H:i') }}</li>
-                                @endforeach
+                                    @foreach ($hours as $hour)
+                                        <li>{{ $hour->opens_at->format('H:i') }} -
+                                            {{ $hour->closes_at->format('H:i') }}</li>
+                                    @endforeach
                                 </ul>
                             </div>
                             <div>ABC</div>
@@ -55,18 +56,24 @@ new class extends Component {
                     @endforeach
                 </ul>
             </x-ts-card>
-            <x-ts-card header="Estatísticas" class="detail">
-                <x-detail label="Clientes" :value="$company->customers->count()" />
-                <div class="grid grid-cols-2">
+            <x-ts-card header="Estatísticas">
+                <div class="detail">
+                    <x-detail label="Clientes" :value="$company->customers->count()" />
+                </div>
+                <div class="grid grid-cols-2 detail my-4">
                     <x-detail label="Ativo" :bool="$company->is_active ? 'Y' : 'N'" />
                     <x-detail label="Visível" :bool="$company->is_visible ? 'Y' : 'N'" />
                 </div>
-                <x-detail label="Total de serviços" value="XXX" />
-                <x-detail label="Avaliações" value="{{ $company->rating_count }} ({{ $company->rating_avg }})" />
+                <div class="detail">
+                    <x-detail label="Total de serviços" value="XXX" />
+                    <x-detail label="Avaliações" value="{{ $company->rating_count }} ({{ $company->rating_avg }})" />
+                </div>
             </x-ts-card>
         </div>
     </div>
-    <x-ts-card header="Serviço disponíveis">
-        @dump($company->serviceTypes()->with('variants')->get()->toArray())
+    <x-ts-card header="Serviço disponíveis" class="detail">
+        @foreach ($company->serviceTypes()->get() as $service)
+            <x-detail :label="$service->name" :value="$service->description" />
+        @endforeach
     </x-ts-card>
 </div>
