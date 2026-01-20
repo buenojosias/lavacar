@@ -7,11 +7,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
+    Route::livewire('/dashboard', 'pages::dashboard')->name('dashboard');
     Route::livewire('/clientes', 'pages::customers.index')->name('customers.index');
     Route::livewire('/clientes/{customer}', 'pages::customers.show')->name('customers.show');
 
