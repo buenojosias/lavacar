@@ -54,7 +54,7 @@ new #[Title('Estabelecimentos')] class extends Component
     <h2>Estabelecimentos</h2>
     <x-ts-table :$headers :$rows filter paginate id="companies">
         @interact('column_name', $row)
-            <a href="#">{{ $row->name }}</a>
+            <a href="{{ route('companies.show', $row) }}">{{ $row->name }}</a>
         @endinteract
         @interact('column_is_active', $row)
             <x-ts-icon :name="$row->is_active ? 'phosphor.check-circle-bold' : 'phosphor.x-circle-bold'" class="h-5 w-5 {{ $row->is_active ? 'text-green-500' : 'text-red-500' }}" />

@@ -17,6 +17,8 @@ class OpeningHours extends Model
 
     protected $casts = [
         'weekday' => WeekdayEnum::class,
+        'opens_at' => 'datetime',
+        'closes_at' => 'datetime',
     ];
 
     public function company(): BelongsTo
