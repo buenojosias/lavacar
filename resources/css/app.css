@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.page-header {
+    @apply flex flex-col sm:flex-row items-center justify-between mb-4 gap-1;
+}
+
 h2 {
-    @apply mb-6 text-2xl font-bold dark:text-gray-300;
+    @apply text-2xl font-bold dark:text-gray-300 flex-1;
 }
 h3 {
     @apply mb-4 text-xl font-semibold text-gray-700 dark:text-gray-400;

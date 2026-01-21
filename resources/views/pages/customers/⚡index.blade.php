@@ -46,7 +46,10 @@ new #[Title('Clientes')] class extends Component
 ?>
 
 <div>
-    <h2>Clientes</h2>
+    <div class="page-header">
+        <h2>Clientes</h2>
+        <x-ts-button text="Cadastrar cliente" :href="route('customers.create')" />
+    </div>
     <x-ts-table :$headers :$rows filter paginate id="customers">
         @interact('column_name', $row)
             <a href="{{ route('customers.show', $row) }}">{{ $row->name }}</a>
