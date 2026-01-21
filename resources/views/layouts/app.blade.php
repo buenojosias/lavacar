@@ -39,9 +39,9 @@
 
         <x-slot:menu>
             <x-ts-side-bar>
-                <x-ts-side-bar.item text="Home" icon="phosphor.house" :route="route('dashboard')" />
-                <x-ts-side-bar.item text="Estabelecimentos" icon="phosphor.building-light" :route="route('companies.index')" />
-                <x-ts-side-bar.item text="Clientes" icon="phosphor.users-three-light" :route="route('customers.index')" />
+                <x-ts-side-bar.item text="Home" icon="phosphor.house" :current="request()->routeIs('dashboard')" :route="route('dashboard')" />
+                <x-ts-side-bar.item text="Estabelecimentos" icon="phosphor.building-light" :current="request()->routeIs('companies.*')" :route="route('companies.index')" />
+                <x-ts-side-bar.item text="Clientes" icon="phosphor.users-three-light" :current="request()->routeIs('customers.*')" :route="route('customers.index')" />
             </x-ts-side-bar>
         </x-slot:menu>
         {{ $slot }}
