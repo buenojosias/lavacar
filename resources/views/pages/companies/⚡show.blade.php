@@ -36,6 +36,11 @@ new class extends Component {
                     MAPA AQUI
                 </div>
             </x-ts-card>
+            <x-ts-card header="Serviço disponíveis" class="detail">
+                @foreach ($company->serviceTypes()->get() as $service)
+                    <x-detail :label="$service->name" :value="$service->description" />
+                @endforeach
+            </x-ts-card>
         </div>
         <div class="space-y-6">
             <x-ts-card header="Horários de atendimento">
@@ -71,9 +76,4 @@ new class extends Component {
             </x-ts-card>
         </div>
     </div>
-    <x-ts-card header="Serviço disponíveis" class="detail">
-        @foreach ($company->serviceTypes()->get() as $service)
-            <x-detail :label="$service->name" :value="$service->description" />
-        @endforeach
-    </x-ts-card>
 </div>

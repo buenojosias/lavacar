@@ -23,6 +23,7 @@ new #[Title('Clientes')] class extends Component
                 $query->where('name', 'like', "%{$this->search}%")
                     ->orWhere('whatsapp', 'like', "%{$this->search}%");
             })
+            ->orderBy('name', 'asc')
             ->paginate($this->quantity)
             ->withQueryString();
 
