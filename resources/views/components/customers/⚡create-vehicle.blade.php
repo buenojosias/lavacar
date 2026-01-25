@@ -6,12 +6,13 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use TallStackUi\Traits\Interactions;
 
-new class extends Component
-{
+new class extends Component {
     use Interactions;
 
     public $plate = null;
     public $brand_model = null;
+    public $category = null;
+    public $year = null;
     public $size = null;
     public $color = null;
 
@@ -42,6 +43,8 @@ new class extends Component
         $data = $this->validate([
             'plate' => 'required|string|max:8',
             'brand_model' => 'required|string|max:255',
+            'category' => 'string|max:100',
+            'year' => 'integer|min:1900|max:' . (date('Y') + 1),
             'size' => 'required|in:' . implode(',', array_column($this->sizeOptions, 'value')),
             'color' => 'required|string|max:50',
         ]);
@@ -52,7 +55,7 @@ new class extends Component
                 $query->where('company_id', $this->company_id);
             })
             ->exists();
-        
+
         if ($exists) {
             $this->addError('plate', 'Veículo já cadastrado.');
             return;
@@ -60,13 +63,14 @@ new class extends Component
 
         $this->nickname = $this->brand_model . ' (' . $this->plate . ')';
 
-
         DB::beginTransaction();
 
         try {
             $vehicle = Vehicle::create([
                 'plate' => $this->plate,
                 'brand_model' => $this->brand_model,
+                'category' => $this->category,
+                'year' => $this->year,
                 'size' => $this->size,
                 'color' => $this->color,
             ]);
@@ -78,7 +82,7 @@ new class extends Component
             ]);
             DB::commit();
 
-            $this->reset(['plate', 'brand_model', 'size', 'color', 'nickname']);
+            $this->reset(['plate', 'brand_model', 'category', 'year', 'size', 'color', 'nickname']);
             $this->dispatch('created');
             $this->dispatch('closeModal');
             $this->toast()->success('Veículo cadastrado com sucesso!')->send();
@@ -93,13 +97,15 @@ new class extends Component
 ?>
 
 <x-ts-modal title="Adicionar veículo" id="create-vehicle-modal" size="sm">
-    <x-ts-errors />
-    <form wire:submit.prevent="save" id="create-vehicle-form" class="space-y-4">
+    <x-ts-errors class="mb-4" />
+    <form wire:submit.prevent="save" id="create-vehicle-form" class="grid sm:grid-cols-2 gap-4">
         <x-ts-input label="Placa" wire:model="plate" maxlength="8" />
-        <x-ts-input label="Marca/Modelo" wire:model="brand_model" />
-        <x-ts-select.styled label="Tamanho"
-            wire:model="size"
-            :options="$sizeOptions"
+        <div class="col-span-2">
+            <x-ts-input label="Marca/Modelo" wire:model="brand_model" />
+        </div>
+        <x-ts-input label="Categoria" wire:model="category" />
+        <x-ts-input label="Ano" wire:model="year" type="number" min="1900" max="{{ date('Y') + 1 }}" />
+        <x-ts-select.styled label="Tamanho" wire:model="size" :options="$sizeOptions"
             select="label:label|value:value|note:description" />
         <x-ts-input label="Cor" wire:model="color" />
     </form>

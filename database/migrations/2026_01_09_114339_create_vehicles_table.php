@@ -14,7 +14,9 @@ return new class extends Migration
             $table->string('plate', 8)->nullable();
             $table->string('plate_type', 1)->nullable();
             $table->string('brand_model', 100);
-            $table->string('size', 3);
+            $table->string('category', 30)->nullable();
+            $table->integer('year');
+            $table->string('size', 3)->nullable();
             $table->string('color', 30);
             $table->timestamps();
             $table->softDeletes();

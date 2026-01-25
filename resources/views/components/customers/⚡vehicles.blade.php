@@ -4,8 +4,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-new class extends Component
-{
+new class extends Component {
     public $customer;
 
     #[Computed]
@@ -22,11 +21,13 @@ new class extends Component
             @forelse ($this->c_vehicles as $c_vehicle)
                 <li class="flex gap-2 justify-between items-center">
                     <div class="detail">
-                        <x-detail
-                            :label="$c_vehicle->nickname ?? $c_vehicle->vehicle->plate"
-                            :value="$c_vehicle->vehicle->brand_model"
-                            note="{{ $c_vehicle->vehicle->size->label() }} ({{ $c_vehicle->vehicle->size->description() }})"
-                            url="#" />
+                        @if ($c_vehicle->vehicle->category)
+                            <x-detail :label="$c_vehicle->nickname ?? $c_vehicle->vehicle->plate" :value="$c_vehicle->vehicle->brand_model"
+                                note="{{ $c_vehicle->vehicle->size->label() }} ({{ $c_vehicle->vehicle->category }})"
+                                url="#" />
+                        @else
+                            <x-detail :label="$c_vehicle->nickname ?? $c_vehicle->vehicle->plate" :value="$c_vehicle->vehicle->brand_model" />
+                        @endif
                     </div>
                     <x-ts-badge :text="$c_vehicle->vehicle->plate" color="amber" light />
                 </li>

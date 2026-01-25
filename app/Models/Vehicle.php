@@ -17,6 +17,8 @@ class Vehicle extends Model
         'plate',
         'plate_type',
         'brand_model',
+        'category',
+        'year',
         'size',
         'color',
     ];
