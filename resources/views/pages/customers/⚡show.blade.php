@@ -4,8 +4,7 @@ use App\Models\Customer;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
-new class extends Component
-{
+new class extends Component {
     public $customerId;
 
     public function mount($customer)
@@ -24,7 +23,7 @@ new class extends Component
                 $query->with('registrar');
             })
             ->find($this->customerId);
-        
+
         return $customer;
     }
 };
@@ -44,10 +43,15 @@ new class extends Component
     <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
         @island(lazy: true)
             @placeholder
-             <x-placeholder quantity="3" />
+                <x-placeholder quantity="3" />
             @endplaceholder
             <livewire:customers.vehicles :customer="$this->customer" />
         @endisland
-        <x-ts-card header="Agendamentos do cliente"></x-ts-card>
+        @island(lazy: true)
+            @placeholder
+                <x-placeholder quantity="3" />
+            @endplaceholder
+            <livewire:customers.bookings :customer="$this->customer" />
+        @endisland
     </div>
 </div>

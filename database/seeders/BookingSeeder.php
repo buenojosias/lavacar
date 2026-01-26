@@ -32,7 +32,7 @@ class BookingSeeder extends Seeder
                 }
 
                 $serviceVariant = $company->serviceTypes->random()->variants->random()->toArray();
-                $scheduledDate = now()->addDays(rand(0, 3))->format('Y-m-d');
+                $scheduledDate = now()->addDays(rand(-1, 3))->format('Y-m-d');
                 $startsAt = Carbon::parse($scheduledDate . ' ' . $times[rand(0, 16)])->toDateTimeLocalString();
                 $endsAt = Carbon::parse($startsAt)->addMinutes($serviceVariant['duration'])->toDateTimeLocalString();
                 $booking = [
