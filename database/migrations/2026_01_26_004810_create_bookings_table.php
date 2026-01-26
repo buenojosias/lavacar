@@ -19,6 +19,7 @@ return new class extends Migration
             $table->dateTime('ends_at');
             $table->integer('price');
             $table->string('status', 20)->default('pending');
+            $table->mediumText('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

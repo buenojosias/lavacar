@@ -30,6 +30,9 @@ new class extends Component {
 ?>
 
 <div>
+    <div class="page-header">
+        <h2>Cliente</h2>
+    </div>
     <x-ts-card header="Detalhes do cliente" class="detail g-2">
         <x-detail label="Nome" :value="$this->customer->name" />
         <x-detail label="WhatsApp" :value="$this->customer->whatsapp" />

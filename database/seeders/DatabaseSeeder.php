@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
             ServiceVariantSeeder::class,
             VehicleSeeder::class,
             CompanyVehicleSeeder::class,
+            BookingSeeder::class,
+            BookingSeeder::class,
+            BookingSeeder::class,
         ]);
     }
 }

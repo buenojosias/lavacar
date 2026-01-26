@@ -45,6 +45,10 @@ class BookingSeeder extends Seeder
                     'ends_at' => $endsAt,
                     'price' => $serviceVariant['price'],
                     'status' => Arr::random(['pending', 'confirmed']),
+                    'notes' => fake()->randomElement([
+                        null,
+                        fake()->sentence(),
+                    ]),
                 ];
 
                 Booking::create($booking);
