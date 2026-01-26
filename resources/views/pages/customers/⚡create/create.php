@@ -1,10 +1,15 @@
 <?php
 
+use App\Models\Customer;
+use App\Models\User;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use TallStackUi\Traits\Interactions;
 
 new #[Title('Cadastrar cliente')] class extends Component
 {
+    use Interactions;
+
     public $can_save = false;
     public $name = '';
     public $whatsapp = '';
@@ -22,10 +27,9 @@ new #[Title('Cadastrar cliente')] class extends Component
                 $this->addError('whatsapp', 'Cliente já cadastrado(a) neste estabelecimento.');
                 return;
             }
-            
+
             if ($user = $this->checkIfUserExists($this->formattedWhatsapp)) {
                 $this->user_id = $user->id;
-                dump('Usuário existente. ID: ' . $user->id . ', Nome: ' . $user->name);
             }
         }
         $this->can_save = true;
@@ -41,13 +45,13 @@ new #[Title('Cadastrar cliente')] class extends Component
     public function findExistingGlobalCustomers()
     {
         $whatsapp = $this->formattedWhatsapp;
-        $existingGlobalCustomers = \App\Models\Customer::query()
+        $existingGlobalCustomers = Customer::query()
             ->withoutGlobalScopes()
             ->select('id', 'company_id', 'user_id', 'name')
             ->with('user:id,name')
             ->where('whatsapp', $whatsapp)
             ->get();
-        
+
         return $existingGlobalCustomers;
     }
 
@@ -59,7 +63,7 @@ new #[Title('Cadastrar cliente')] class extends Component
 
     public function checkIfUserExists($whatsapp)
     {
-        $user = \App\Models\User::where('whatsapp', $whatsapp)->first();
+        $user = User::where('whatsapp', $whatsapp)->first();
         return $user;
     }
 
@@ -76,10 +80,11 @@ new #[Title('Cadastrar cliente')] class extends Component
         $data['whatsapp'] = $this->formattedWhatsapp;
         $data['registered_by_user_id'] = auth()->id();
 
-        $customer = \App\Models\Customer::create($data);
+        $customer = Customer::create($data);
         if ($customer) {
-            $this->reset();
-            dd($customer);
+            $this->toast()->success('Cliente cadastrado com sucesso.')->flash()->send();
+            $this->reset(['can_save', 'name', 'whatsapp', 'formattedWhatsapp', 'user_id']);
+            return $this->redirect(route('customers.show', $customer));
         }
     }
 };

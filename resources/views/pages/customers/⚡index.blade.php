@@ -7,12 +7,11 @@ use Livewire\Attributes\Title;
 use Livewire\WithPagination;
 use Illuminate\Database\Eloquent\Builder;
 
-new #[Title('Clientes')] class extends Component
-{
+new #[Title('Clientes')] class extends Component {
     use WithPagination;
- 
+
     public ?int $quantity = 10;
- 
+
     public ?string $search = null;
 
     #[Computed]
@@ -20,8 +19,7 @@ new #[Title('Clientes')] class extends Component
     {
         $customers = Customer::query()
             ->when($this->search, function (Builder $query) {
-                $query->where('name', 'like', "%{$this->search}%")
-                    ->orWhere('whatsapp', 'like', "%{$this->search}%");
+                $query->where('name', 'like', "%{$this->search}%")->orWhere('whatsapp', 'like', "%{$this->search}%");
             })
             ->orderBy('name', 'asc')
             ->paginate($this->quantity)
@@ -29,16 +27,11 @@ new #[Title('Clientes')] class extends Component
 
         return $customers;
     }
- 
+
     public function with(): array
     {
         return [
-            'headers' => [
-                ['index' => 'name', 'label' => 'Nome'],
-                ['index' => 'whatsapp', 'label' => 'WhatsApp'],
-                ['index' => 'app', 'label' => 'Aplicativo'],
-                ['index' => 'action'],
-            ],
+            'headers' => [['index' => 'name', 'label' => 'Nome'], ['index' => 'whatsapp', 'label' => 'WhatsApp'], ['index' => 'app', 'label' => 'Aplicativo'], ['index' => 'action']],
             'rows' => $this->rows,
             'type' => 'data',
         ];
@@ -49,7 +42,9 @@ new #[Title('Clientes')] class extends Component
 <div>
     <div class="page-header">
         <h2>Clientes</h2>
-        <x-ts-button text="Cadastrar cliente" :href="route('customers.create')" />
+        @cannot('isAdmin')
+            <x-ts-button text="Cadastrar cliente" :href="route('customers.create')" />
+        @endcannot
     </div>
     <x-ts-table :$headers :$rows filter paginate id="customers">
         @interact('column_name', $row)
