@@ -43,4 +43,19 @@ enum BookingStatusEnum: string
             self::CANCELLED => null,
         };
     }
+
+    public function color(): string
+    {
+        return match ($this) {
+            self::PENDING => 'orange',
+            self::CONFIRMED => 'blue',
+            self::CHECKED_IN => 'sky',
+            self::IN_PROGRESS => 'neutral',
+            self::COMPLETED => 'green',
+            self::PICKED_UP => 'black',
+            self::RESCHEDULED => 'gray',
+            self::NO_SHOW => 'red',
+            self::CANCELLED => 'red',
+        };
+    }
 }

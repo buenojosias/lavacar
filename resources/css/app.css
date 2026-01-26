@@ -9,28 +9,39 @@
 h2 {
     @apply text-2xl font-bold dark:text-gray-300 flex-1;
 }
+
 h3 {
     @apply mb-4 text-xl font-semibold text-gray-700 dark:text-gray-400;
+}
+
+.list {
+    @apply space-y-2;
 }
 
 .detail {
     @apply gap-4 grid;
 }
+
 .detail.g-2 {
     @apply grid-cols-1 md:grid-cols-2;
 }
+
 .detail.g-3 {
     @apply grid-cols-1 md:grid-cols-3;
 }
+
 .detail div {
     @apply flex justify-between items-center;
 }
+
 .detail dt {
     @apply font-semibold text-gray-800 dark:text-gray-200;
 }
+
 .detail dd {
     @apply font-medium text-gray-500 dark:text-gray-400;
 }
+
 .detail .note {
     @apply text-xs text-gray-400;
 }

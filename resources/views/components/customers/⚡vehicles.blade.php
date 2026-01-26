@@ -17,24 +17,17 @@ new class extends Component {
 
 <div>
     <x-ts-card header="Veículos do cliente">
-        <ul class="space-y-6">
+        <div class="list">
             @forelse ($this->c_vehicles as $c_vehicle)
-                <li class="flex gap-2 justify-between items-center">
-                    <div class="detail">
-                        @if ($c_vehicle->vehicle->category)
-                            <x-detail :label="$c_vehicle->nickname ?? $c_vehicle->vehicle->plate" :value="$c_vehicle->vehicle->brand_model"
-                                note="{{ $c_vehicle->vehicle->size->label() }} ({{ $c_vehicle->vehicle->category }})"
-                                url="#" />
-                        @else
-                            <x-detail :label="$c_vehicle->nickname ?? $c_vehicle->vehicle->plate" :value="$c_vehicle->vehicle->brand_model" />
-                        @endif
-                    </div>
+                <x-list-item :title="$c_vehicle->nickname ?? $c_vehicle->vehicle->plate" :subtitle="$c_vehicle->vehicle->brand_model"
+                    description="{{ $c_vehicle->vehicle->size->label() }} ({{ $c_vehicle->vehicle->category }})"
+                    href="#">
                     <x-ts-badge :text="$c_vehicle->vehicle->plate" color="amber" light />
-                </li>
+                </x-list-item>
             @empty
-                <li>Nenhum veículo cadastrado.</li>
+                <x-list-item>Nenhum veículo cadastrado.</x-list-item>
             @endforelse
-        </ul>
+        </div>
         @if (auth()->user()->role === 'PARTNER')
             <x-slot:footer>
                 <x-ts-button x-on:click="$modalOpen('create-vehicle-modal')" text="Adicionar veículo" />
