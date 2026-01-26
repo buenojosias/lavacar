@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ServiceVariant extends Model
 {
@@ -14,6 +15,11 @@ class ServiceVariant extends Model
         'price',
         'is_active',
     ];
+
+    public function bookings(): HasMany
+    {
+        return $this->hasMany(Booking::class);
+    }
 
     public function serviceType(): BelongsTo
     {

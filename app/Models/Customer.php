@@ -28,6 +28,11 @@ class Customer extends Model
         'registered_by_user_id',
     ];
 
+    public function bookings(): HasMany
+    {
+        return $this->hasMany(Booking::class);
+    }
+
     public function companyVehicles(): HasMany
     {
         return $this->hasMany(CompanyVehicle::class);

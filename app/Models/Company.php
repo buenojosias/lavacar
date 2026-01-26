@@ -30,6 +30,11 @@ class Company extends Model
         'is_visible',
     ];
 
+    public function bookings(): HasMany
+    {
+        return $this->hasMany(Booking::class);
+    }
+
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);

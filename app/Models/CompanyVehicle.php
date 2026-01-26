@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CompanyVehicle extends Model
@@ -17,6 +18,11 @@ class CompanyVehicle extends Model
         'nickname',
         'is_active',
     ];
+
+    public function bookings(): HasMany
+    {
+        return $this->hasMany(Booking::class);
+    }
 
     public function company(): BelongsTo
     {
