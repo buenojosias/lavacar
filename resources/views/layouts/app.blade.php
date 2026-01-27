@@ -44,6 +44,8 @@
                     <x-ts-side-bar.item text="Estabelecimentos" icon="phosphor.building-light" :current="request()->routeIs('companies.*')"
                         :route="route('companies.index')" />
                 @endcan
+                <x-ts-side-bar.item text="Agendamentos" icon="phosphor.calendar-dots-light" :current="request()->routeIs('bookings.*')"
+                    :route="route('bookings.index')" />
                 <x-ts-side-bar.item text="Clientes" icon="phosphor.users-three-light" :current="request()->routeIs('customers.*')"
                     :route="route('customers.index')" />
             </x-ts-side-bar>

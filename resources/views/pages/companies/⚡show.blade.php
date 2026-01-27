@@ -74,6 +74,9 @@ new class extends Component {
                     <x-detail label="Avaliações" value="{{ $company->rating_count }} ({{ $company->rating_avg }})" />
                 </div>
             </x-ts-card>
+            <div>
+                <x-ts-button text="Ver agendamentos" :href="route('companies.bookings', $company)" class="w-full" color="slate" />
+            </div>
         </div>
     </div>
 </div>
