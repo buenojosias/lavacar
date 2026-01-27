@@ -37,7 +37,8 @@ new class extends Component {
         </x-ts-card>
     @endif
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <livewire:widgets::dashboard.company-customers-count />
+        <livewire:widgets::dashboard.company-today-services-count />
     </div>
 </div>

@@ -25,4 +25,21 @@ class ServiceVariant extends Model
     {
         return $this->belongsTo(ServiceType::class);
     }
+
+    public function getFormattedPriceAttribute()
+    {
+        return 'R$ ' . number_format($this->price / 100, 2, ',', '.');
+    }
+
+    public function getFormattedDurationAttribute()
+    {
+        $minutes = $this->duration;
+        if ($minutes < 60) {
+            return $minutes . 'min';
+        } else if ($minutes % 60 > 0) {
+            return floor($minutes / 60) . 'h ' . $minutes % 60 . 'min';
+        } else {
+            return floor($minutes / 60) . 'h ';
+        }
+    }
 }

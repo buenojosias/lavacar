@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::livewire('/clientes/{customer}', 'pages::customers.show')->name('customers.show');
 
     Route::livewire('/agendamentos', 'pages::bookings.index')->name('bookings.index');
+    Route::livewire('/agendamentos/cadastro', 'pages::bookings.create')->name('bookings.create');
     Route::livewire('/agendamentos/{booking}', 'pages::bookings.show')->name('bookings.show');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
