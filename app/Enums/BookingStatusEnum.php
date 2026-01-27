@@ -29,14 +29,15 @@ enum BookingStatusEnum: string
         };
     }
 
-    public function actionLabel() {
+    public function actionLabel()
+    {
         return match ($this) {
             self::PENDING => null,
             self::CONFIRMED => 'Confirmar',
             self::CHECKED_IN => 'Registrar entrada',
             self::IN_PROGRESS => 'Iniciar serviço',
             self::COMPLETED => 'Marcar como concluído',
-            self::PICKED_UP => 'Registrar chegada',
+            self::PICKED_UP => 'Registrar retirada',
             self::RESCHEDULED => 'Reagendar',
             self::NO_SHOW => 'Marcar como no show',
             self::CANCELLED => 'Cancelar',
@@ -66,8 +67,8 @@ enum BookingStatusEnum: string
             self::CHECKED_IN => 'sky',
             self::IN_PROGRESS => 'neutral',
             self::COMPLETED => 'green',
-            self::PICKED_UP => 'black',
-            self::RESCHEDULED => 'gray',
+            self::PICKED_UP => 'sky',
+            self::RESCHEDULED => 'amber',
             self::NO_SHOW => 'red',
             self::CANCELLED => 'red',
         };

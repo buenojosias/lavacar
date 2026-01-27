@@ -36,12 +36,12 @@ new class extends Component {
         <x-slot:footer>
             <div class="flex justify-between items-center gap-4">
                 <x-ts-badge :text="$booking->status->label()" lg :color="$booking->status->color()" />
-                @cannot('isAdmin')
+                @if ($booking->status->nextStatus() && !auth()->user()->can('isAdmin'))
                     <div class="flex gap-1">
-                        <x-ts-button :text="$booking->status->nextStatus()->actionLabel()" />
-                        <x-ts-button text="+" color="white" />
+                        <x-ts-button :text="$booking->status->nextStatus()->actionLabel()"
+                            x-on:click="$dispatch('change-status', [{{ $booking->id }}, '{{ $booking->status->nextStatus()->value }}'])" />
                     </div>
-                @endcannot
+                @endif
             </div>
         </x-slot:footer>
     </x-ts-card>
@@ -81,11 +81,30 @@ new class extends Component {
                 </div>
                 <x-detail label="Agendado em" :value="$booking->created_at->format('d/m/Y H:i')" />
             </div>
+            @if ($booking->status->nextStatus() && !auth()->user()->can('isAdmin'))
+                <x-slot:footer>
+                    <div class="flex gap-2 justify-between">
+                        <x-ts-button text="Reagendar" :color="App\Enums\BookingStatusEnum::from('rescheduled')->color()"
+                            x-on:click="$dispatch('change-status', [{{ $booking->id }}, '{{ App\Enums\BookingStatusEnum::from('rescheduled')->value }}'])"
+                            sm />
+                        <div class="flex gap-2">
+                            <x-ts-button text="Cancelar" :color="App\Enums\BookingStatusEnum::from('cancelled')->color()"
+                                x-on:click="$dispatch('change-status', [{{ $booking->id }}, '{{ App\Enums\BookingStatusEnum::from('cancelled')->value }}'])"
+                                sm />
+                            <x-ts-button text="No show" :color="App\Enums\BookingStatusEnum::from('no_show')->color()"
+                                x-on:click="$dispatch('change-status', [{{ $booking->id }}, '{{ App\Enums\BookingStatusEnum::from('no_show')->value }}'])"
+                                sm />
+                        </div>
+                    </div>
+                </x-slot:footer>
+            @endif
         </x-ts-card>
 
         <x-ts-card header="Timeline">
             lalala
         </x-ts-card>
-
+        @island()
+        <livewire:bookings.change-status @updated="$refresh()" />
+        @endisland()
     </div>
 </div>

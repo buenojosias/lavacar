@@ -88,12 +88,27 @@ new class extends Component {
                     </div>
                 </div>
                 <div class="pl-14 lg:pl-0 flex items-center gap-2">
-                    <div class="ml-3 lg:ml-0 flex gap-1">
-                        <x-ts-button :text="$booking->status->nextStatus()->actionLabel()" xs />
-                        <x-ts-button text="+" color="white" sm />
+                    <div class="ml-3 lg:ml-0 flex gap-2 items-center">
+                        @if ($booking->status->nextStatus() && !auth()->user()->can('isAdmin'))
+                            <x-ts-button :text="$booking->status->nextStatus()->actionLabel()"
+                                x-on:click="$dispatch('change-status', [{{ $booking->id }}, '{{ $booking->status->nextStatus()->value }}'])"
+                                xs />
+
+                            <x-ts-dropdown icon="ellipsis-vertical" static>
+                                <x-ts-dropdown.items text="Reagendar"
+                                    x-on:click="$dispatch('change-status', [{{ $booking->id }}, '{{ App\Enums\BookingStatusEnum::from('rescheduled')->value }}'])" />
+                                <x-ts-dropdown.items text="Cancelar" separator
+                                    x-on:click="$dispatch('change-status', [{{ $booking->id }}, '{{ App\Enums\BookingStatusEnum::from('cancelled')->value }}'])" />
+                                <x-ts-dropdown.items text="No show"
+                                    x-on:click="$dispatch('change-status', [{{ $booking->id }}, '{{ App\Enums\BookingStatusEnum::from('no_show')->value }}'])" />
+                            </x-ts-dropdown>
+                        @endif
                     </div>
                 </div>
             </div>
         @endforeach
     </div>
+    @island()
+    <livewire:bookings.change-status @updated="$refresh()" />
+    @endisland()
 </div>
