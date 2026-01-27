@@ -11,9 +11,23 @@ new class extends Component {
     #[Url(as: 'data')]
     public $selectedDate;
 
+    #[Url(as: 'status')]
+    public $status;
+
+    public $statuses = [];
+
     public function mount($company = null)
     {
         $this->selectedDate = now()->format('Y-m-d');
+        $this->statuses = collect(\App\Enums\BookingStatusEnum::cases())
+            ->map(function ($status) {
+                return [
+                    'value' => $status->value,
+                    'label' => $status->label(),
+                ];
+            })
+            ->toArray();
+        $this->statuses = array_merge([['value' => '', 'label' => 'Todos']], $this->statuses);
         if ($company) {
             $this->companyId = $company;
         }
@@ -23,8 +37,11 @@ new class extends Component {
     public function bookings()
     {
         return $bookings = Booking::query()
-            ->when($this->companyId, function($query) {
+            ->when($this->companyId, function ($query) {
                 $query->where('company_id', $this->companyId);
+            })
+            ->when($this->status, function ($query) {
+                $query->where('status', $this->status);
             })
             ->where('scheduled_date', $this->selectedDate)
             ->with('companyVehicle', 'serviceVariant.serviceType')
@@ -46,9 +63,12 @@ new class extends Component {
         <x-ts-button text="Novo agendamento" />
     </div>
 
-    <div class="flex items-center text-sm font-semibold text-secondary-800 dark:text-dark-200">
-        <div>
+    <div class="w-full md:w-1/2 flex items-center gap-2 text-sm font-semibold text-secondary-800 dark:text-dark-200">
+        <div class="w-1/2">
             <x-ts-date wire:model.live="selectedDate" format="DD/MM/YYYY" helpers />
+        </div>
+        <div class="w-1/2">
+            <x-ts-select.native wire:model.live="status" :options="$statuses" />
         </div>
     </div>
 
