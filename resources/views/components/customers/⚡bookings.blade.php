@@ -27,7 +27,7 @@ new class extends Component {
 <x-ts-card header="Agendamentos do cliente">
     <div class="list">
         @forelse($this->bookings as $booking)
-            <x-list-item :title="$booking->serviceVariant->serviceType->name" :subtitle="$booking->starts_at->format('d/m/Y H:i')" :description="$booking->companyVehicle->nickname ?? null" href="#">
+            <x-list-item :title="$booking->serviceVariant->serviceType->name" :subtitle="$booking->starts_at->format('d/m/Y H:i')" :description="$booking->companyVehicle->nickname ?? null" :href="route('bookings.show', $booking)">
                 <x-ts-badge :text="$booking->status->label()" :color="$booking->status->color()" />
             </x-list-item>
         @empty

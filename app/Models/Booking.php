@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\BookingStatusEnum;
+use App\Models\Scopes\CompanyScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,6 +11,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Booking extends Model
 {
     use SoftDeletes;
+
+    protected static function booted()
+    {
+        parent::booted();
+
+        static::addGlobalScope(new CompanyScope);
+    }
 
     protected $fillable = [
         'company_id',
@@ -54,5 +62,34 @@ class Booking extends Model
     public function nextStatus(): ?BookingStatusEnum
     {
         return $this->status->nextStatus();
+    }
+
+    public function getFormattedDayAttribute()
+    {
+        $day = $this->scheduled_date;
+        if ($day->isToday()) {
+            return 'Hoje';
+        } elseif ($day->isTomorrow()) {
+            return 'Amanhã';
+        } else {
+            return $day->format('d/m/Y');
+        }
+    }
+
+    public function getFormattedPriceAttribute()
+    {
+        return 'R$ ' . number_format($this->price/100, 2, ',', '.');
+    }
+
+    public function getFormattedDurationAttribute()
+    {
+        $minutes = $this->starts_at->diffInMinutes($this->ends_at);
+        if ($minutes < 60) {
+            return $minutes . 'min';
+        } else if ($minutes%60 > 0) {
+            return floor($minutes/60) . 'h ' . $minutes%60 . 'min';
+        } else {
+            return floor($minutes/60) . 'h ';
+        }
     }
 }
