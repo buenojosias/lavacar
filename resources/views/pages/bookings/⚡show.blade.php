@@ -100,11 +100,15 @@ new class extends Component {
             @endif
         </x-ts-card>
 
-        <x-ts-card header="Timeline">
-            lalala
-        </x-ts-card>
+        @island(lazy: true, name: 'timeline')
+            @placeholder
+                <x-placeholder quantity="3" />
+            @endplaceholder
+            <livewire:bookings.timeline :booking="$booking" />
+        @endisland
+
         @island()
-        <livewire:bookings.change-status @updated="$refresh()" />
-        @endisland()
+            <livewire:bookings.change-status @updated="$refresh()" />
+        @endisland
     </div>
 </div>
