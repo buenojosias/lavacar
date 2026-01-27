@@ -53,6 +53,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function bookingStatusHistories(): HasMany
+    {
+        return $this->hasMany(BookingStatusHistory::class);
+    }
+
     public function companies(): BelongsToMany
     {
         return $this->belongsToMany(Company::class)->withPivot('is_owner');

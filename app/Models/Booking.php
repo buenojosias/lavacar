@@ -6,6 +6,7 @@ use App\Enums\BookingStatusEnum;
 use App\Models\Scopes\CompanyScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Booking extends Model
@@ -59,6 +60,11 @@ class Booking extends Model
         return $this->belongsTo(ServiceVariant::class);
     }
 
+    public function statusHistories(): HasMany
+    {
+        return $this->hasMany(BookingStatusHistory::class);
+    }
+
     public function nextStatus(): ?BookingStatusEnum
     {
         return $this->status->nextStatus();
@@ -78,7 +84,7 @@ class Booking extends Model
 
     public function getFormattedPriceAttribute()
     {
-        return 'R$ ' . number_format($this->price/100, 2, ',', '.');
+        return 'R$ ' . number_format($this->price / 100, 2, ',', '.');
     }
 
     public function getFormattedDurationAttribute()
@@ -86,10 +92,10 @@ class Booking extends Model
         $minutes = $this->starts_at->diffInMinutes($this->ends_at);
         if ($minutes < 60) {
             return $minutes . 'min';
-        } else if ($minutes%60 > 0) {
-            return floor($minutes/60) . 'h ' . $minutes%60 . 'min';
+        } else if ($minutes % 60 > 0) {
+            return floor($minutes / 60) . 'h ' . $minutes % 60 . 'min';
         } else {
-            return floor($minutes/60) . 'h ';
+            return floor($minutes / 60) . 'h ';
         }
     }
 }

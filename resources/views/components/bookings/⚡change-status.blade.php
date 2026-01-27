@@ -37,8 +37,14 @@ new class extends Component {
         }
 
         $booking->status = $this->status;
+        if ($booking->save()) {
+            $booking->statusHistories()->create([
+                'status' => $this->status,
+                'user_id' => auth()->id(),
+                'origin' => 'dashboard',
+            ]);
+        }
 
-        $booking->save();
         $this->dispatch('updated');
         $this->toast()
             ->success('Status alterado para ' . BookingStatusEnum::from($this->status)->label())
