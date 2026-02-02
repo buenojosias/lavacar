@@ -60,7 +60,7 @@ new class extends Component {
 <div>
     <div class="page-header">
         <h2>Agendamentos</h2>
-        <x-ts-button text="Novo agendamento" />
+        <x-ts-button :href="route('bookings.create')" text="Novo agendamento" />
     </div>
 
     <div class="w-full md:w-1/2 flex items-center gap-2 text-sm font-semibold text-secondary-800 dark:text-dark-200">
