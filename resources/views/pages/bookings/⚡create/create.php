@@ -5,7 +5,7 @@ use App\Models\CompanyVehicle;
 use App\Models\OpeningHours;
 use App\Models\ServiceType;
 use App\Models\ServiceVariant;
-
+use Carbon\Carbon;
 use Livewire\Component;
 use TallStackUi\Traits\Interactions;
 
@@ -228,56 +228,60 @@ new class extends Component
 
     public function save()
     {
-        $this->validate([
+        $data = $this->validate([
             'customer_id' => 'required|exists:customers,id',
             'company_vehicle_id' => 'required|exists:company_vehicles,id',
             'service_variant_id' => 'required|exists:service_variants,id',
-            'price' => 'required|numeric|min:0',
             'scheduled_date' => 'required|string|after_or_equal:today',
             'time' => 'required|string',
+            'price' => 'required|numeric|min:0',
         ]);
+        $duration = ServiceVariant::find($this->service_variant_id)->duration;
+        $data['company_id'] = auth()->user()->selected_company_id;
+        $data['starts_at'] = Carbon::parse($data['scheduled_date'] . ' ' . $data['time']);
+        $data['ends_at'] = Carbon::parse($data['starts_at'])->addMinutes($duration);
+        $data['status'] = 'confirmed';
 
         try {
-            $serviceVariant = ServiceVariant::findOrFail($this->service_variant_id);
+            // $serviceVariant = ServiceVariant::findOrFail($this->service_variant_id);
 
-            // Parse date and time more robustly
-            $dateTimeString = $this->scheduled_date . ' ' . $this->time;
-            $startsAt = \Carbon\Carbon::createFromFormat('d/m/Y H:i', $dateTimeString);
-            if (!$startsAt) {
-                $startsAt = \Carbon\Carbon::parse($dateTimeString);
-            }
-            $endsAt = $startsAt->copy()->addMinutes($serviceVariant->duration);
+            // // Parse date and time more robustly
+            // $dateTimeString = $this->scheduled_date . ' ' . $this->time;
+            // $startsAt = \Carbon\Carbon::createFromFormat('d/m/Y H:i', $dateTimeString);
+            // if (!$startsAt) {
+            //     $startsAt = \Carbon\Carbon::parse($dateTimeString);
+            // }
+            // $endsAt = $startsAt->copy()->addMinutes($serviceVariant->duration);
 
-            // Check for conflicts (simplified check)
-            $conflictExists = Booking::query()
-                ->where('company_id', auth()->user()->selected_company_id)
-                ->where('scheduled_date', $this->scheduled_date)
-                ->where(function($query) use ($startsAt, $endsAt) {
-                    $query->where('starts_at', '<', $endsAt)
-                          ->where('ends_at', '>', $startsAt);
-                })
-                ->exists();
+            // // Check for conflicts (simplified check)
+            // $conflictExists = Booking::query()
+            //     ->where('company_id', auth()->user()->selected_company_id)
+            //     ->where('scheduled_date', $this->scheduled_date)
+            //     ->where(function($query) use ($startsAt, $endsAt) {
+            //         $query->where('starts_at', '<', $endsAt)
+            //               ->where('ends_at', '>', $startsAt);
+            //     })
+            //     ->exists();
 
-            if ($conflictExists) {
-                $this->toast()->error('Horário indisponível. Já existe um agendamento neste período.')->send();
-                return;
-            }
+            // if ($conflictExists) {
+            //     $this->toast()->error('Horário indisponível. Já existe um agendamento neste período.')->send();
+            //     return;
+            // }
 
-            Booking::create([
-                'company_id' => auth()->user()->selected_company_id,
-                'customer_id' => $this->customer_id,
-                'company_vehicle_id' => $this->company_vehicle_id,
-                'service_variant_id' => $this->service_variant_id,
-                'scheduled_date' => $this->scheduled_date,
-                'starts_at' => $startsAt,
-                'ends_at' => $endsAt,
-                'price' => $this->price * 100, // Convert from reais to cents for storage
-                'status' => 'confirmed',
-            ]);
+            // Booking::create([
+            //     'company_id' => auth()->user()->selected_company_id,
+            //     'customer_id' => $this->customer_id,
+            //     'company_vehicle_id' => $this->company_vehicle_id,
+            //     'service_variant_id' => $this->service_variant_id,
+            //     'scheduled_date' => $this->scheduled_date,
+            //     'starts_at' => $startsAt,
+            //     'ends_at' => $endsAt,
+            //     'price' => $this->price * 100, // Convert from reais to cents for storage
+            //     'status' => 'confirmed',
+            // ]);
 
+            Booking::create($data);
             $this->toast()->success('Serviço agendado com sucesso!')->send();
-
-            // Reset form after successful submission
             $this->resetForm();
 
         } catch (\Illuminate\Validation\ValidationException $e) {

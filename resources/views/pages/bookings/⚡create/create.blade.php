@@ -89,11 +89,11 @@
             <x-ts-time
                 label="Horário"
                 wire:model="time"
-                {{-- :min-hour="$minHour"
-                :max-hour="$maxHour" --}}
+                :min-hour="$minHour"
+                :max-hour="$maxHour"
                 {{-- :min-minute="$minMinute"
                 :max-minute="$maxMinute" --}}
-                :disabled="!$scheduled_date"
+                {{-- :disabled="!$scheduled_date" --}}
                 placeholder="{{ $scheduled_date ? 'Selecione um horário...' : 'Selecione uma data primeiro' }}"
                 step-minute="5"
                 format="24"
@@ -105,9 +105,9 @@
             <x-ts-button
                 type="submit"
                 form="booking-form"
-                :disabled="!$customer_id || !$company_vehicle_id || !$service_variant_id || !$scheduled_date || !$time"
+                {{-- :disabled="!$customer_id || !$company_vehicle_id || !$service_variant_id || !$scheduled_date || !$time"
                 wire:loading.attr="disabled"
-                wire:loading.class="opacity-50 cursor-not-allowed"
+                wire:loading.class="opacity-50 cursor-not-allowed" --}}
             >
                 <span wire:loading.remove wire:target="save">Agendar</span>
                 <span wire:loading wire:target="save">

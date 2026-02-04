@@ -84,7 +84,7 @@ new class extends Component {
                         <p class="text-sm">{{ $booking->companyVehicle->nickname }}</p>
                     </a>
                     <div class="h-full flex items-center">
-                        <x-ts-badge :text="$booking->status->label()" :color="$booking->status->color()" xs />
+                        <x-ts-badge :text="$booking->status->label()" :color="$booking->status->color()" round xs />
                     </div>
                 </div>
                 <div class="pl-14 lg:pl-0 flex items-center gap-2">
@@ -92,7 +92,7 @@ new class extends Component {
                         @if ($booking->status->nextStatus() && !auth()->user()->can('isAdmin'))
                             <x-ts-button :text="$booking->status->nextStatus()->actionLabel()"
                                 x-on:click="$dispatch('change-status', [{{ $booking->id }}, '{{ $booking->status->nextStatus()->value }}'])"
-                                xs />
+                                sm />
 
                             <x-ts-dropdown icon="ellipsis-vertical" static>
                                 <x-ts-dropdown.items text="Reagendar"

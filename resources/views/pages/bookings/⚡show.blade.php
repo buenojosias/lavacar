@@ -35,7 +35,7 @@ new class extends Component {
         </div>
         <x-slot:footer>
             <div class="flex justify-between items-center gap-4">
-                <x-ts-badge :text="$booking->status->label()" lg :color="$booking->status->color()" />
+                <x-ts-badge :text="$booking->status->label()" lg round :color="$booking->status->color()" />
                 @if ($booking->status->nextStatus() && !auth()->user()->can('isAdmin'))
                     <div class="flex gap-1">
                         <x-ts-button :text="$booking->status->nextStatus()->actionLabel()"
