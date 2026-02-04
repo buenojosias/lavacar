@@ -75,11 +75,11 @@ new class extends Component {
     <div class="space-y-3 mt-6">
         @foreach ($this->bookings as $key => $booking)
             <div
-                class="py-2 px-3 flex flex-col lg:flex-row justify-between gap-2 bg-white dark:bg-dark-700 flex w-full rounded-md shadow-md text-secondary-700 dark:text-dark-300 border-l-4 border-{{ $booking->status->color() }}-500">
+                class="p-3 flex flex-col lg:flex-row justify-between gap-2 bg-white dark:bg-dark-700 flex w-full rounded-md shadow-md text-secondary-700 dark:text-dark-300 border-l-4 border-{{ $booking->status->color() }}-500">
                 <div class="flex-1 flex gap-3 items-start">
                     <div class="w-14 text-right pr-3 border-r border-gray-300 dark:border-dark-600 font-semibold">
                         {{ $booking->starts_at->format('H:i') }}</div>
-                    <a class="flex-1" href="{{ route('bookings.show', $booking) }}">
+                    <a class="flex-1 space-y-0.5" href="{{ route('bookings.show', $booking) }}">
                         <p class="font-semibold">{{ $booking->serviceVariant->serviceType->name }}</p>
                         <p class="text-sm">{{ $booking->companyVehicle->nickname }}</p>
                     </a>
