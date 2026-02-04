@@ -24,6 +24,10 @@ Route::middleware('auth')->group(function () {
     Route::livewire('/agendamentos/cadastro', 'pages::bookings.create')->name('bookings.create');
     Route::livewire('/agendamentos/{booking}', 'pages::bookings.show')->name('bookings.show');
 
+    Route::livewire('/servicos', 'pages::services.index')->name('services.index');
+    Route::livewire('/servicos/cadastro', 'pages::services.create')->name('services.create');
+    Route::livewire('/servicos/{service}', 'pages::services.show')->name('services.show');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

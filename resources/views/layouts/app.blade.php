@@ -48,7 +48,9 @@
                     :route="route('bookings.index')" />
                 <x-ts-side-bar.item text="Clientes" icon="phosphor.users-three-light" :current="request()->routeIs('customers.*')"
                     :route="route('customers.index')" />
-            </x-ts-side-bar>
+                <x-ts-side-bar.item text="Serviços" icon="phosphor.wrench-light" :current="request()->routeIs('services.*')"
+                    :route="route('services.index')" />
+                </x-ts-side-bar>
         </x-slot:menu>
         {{ $slot }}
     </x-ts-layout>

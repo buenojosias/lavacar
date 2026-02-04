@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\VehicleSizeEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,6 +15,10 @@ class ServiceVariant extends Model
         'duration',
         'price',
         'is_active',
+    ];
+
+    protected $casts = [
+        'vehicle_size' => VehicleSizeEnum::class
     ];
 
     public function bookings(): HasMany
