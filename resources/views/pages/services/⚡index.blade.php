@@ -61,10 +61,10 @@ new #[Title('Serviços')] class extends Component {
                                         <p class="text-sm text-gray-500">{{ $variant->formatted_duration }}</p>
                                         <p class="text-md font-semibold text-green-600">{{ $variant->formatted_price }}
                                         </p>
+                                        @if (!$variant->is_active)
+                                            <x-ts-badge text="Inativo" color="red" light round />
+                                        @endif
                                     </div>
-                                    @if (!$variant->is_active)
-                                        <x-ts-badge text="Inativo" color="red" light />
-                                    @endif
                                 </x-list-item>
                             @endforeach
                         </div>
