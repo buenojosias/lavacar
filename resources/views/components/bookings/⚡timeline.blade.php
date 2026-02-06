@@ -12,11 +12,11 @@ new class extends Component {
         $this->booking = $booking;
     }
 
-    #[On('updated')]
-    public function refresh()
-    {
-        //
-    }
+    // #[On('updated')]
+    // public function refresh()
+    // {
+    //     return $this->refresh();
+    // }
 
     #[Computed]
     public function steps()

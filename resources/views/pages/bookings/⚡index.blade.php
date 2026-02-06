@@ -45,6 +45,7 @@ new class extends Component {
             })
             ->where('scheduled_date', $this->selectedDate)
             ->with('companyVehicle', 'serviceVariant.serviceType')
+            ->orderBy('starts_at')
             ->get();
     }
 
@@ -96,7 +97,7 @@ new class extends Component {
 
                             <x-ts-dropdown icon="ellipsis-vertical" static>
                                 <x-ts-dropdown.items text="Reagendar"
-                                    x-on:click="$dispatch('change-status', [{{ $booking->id }}, '{{ App\Enums\BookingStatusEnum::from('rescheduled')->value }}'])" />
+                                    x-on:click="$dispatch('get-rebooking-data', [{{ $booking->id }}])" />
                                 <x-ts-dropdown.items text="Cancelar" separator
                                     x-on:click="$dispatch('change-status', [{{ $booking->id }}, '{{ App\Enums\BookingStatusEnum::from('cancelled')->value }}'])" />
                                 <x-ts-dropdown.items text="No show"
@@ -111,6 +112,9 @@ new class extends Component {
         @endforelse
     </div>
     @island()
-    <livewire:bookings.change-status @updated="$refresh()" />
+        <livewire:bookings.change-status @updated="$refresh()" />
     @endisland()
+    @island()
+        <livewire:bookings.rebooking @updated="$refresh()" />
+    @endisland
 </div>

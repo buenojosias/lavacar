@@ -8,7 +8,7 @@ new class extends Component {
 
     public function mount($booking)
     {
-        $this->booking = Booking::with('customer', 'serviceVariant.serviceType', 'companyVehicle.vehicle')->findOrFail($booking);
+        $this->booking = Booking::with('customer:id,name', 'serviceVariant:id,duration,service_type_id', 'serviceVariant.serviceType:id,name', 'companyVehicle:id,nickname,vehicle_id', 'companyVehicle.vehicle:id,brand_model,plate,color,category')->findOrFail($booking);
         if (auth()->user()->can('isAdmin')) {
             $this->booking->load('company');
         }
@@ -76,17 +76,16 @@ new class extends Component {
                 <x-detail label="Serviço" :value="$booking->serviceVariant->serviceType->name" class="col-span-3" />
                 <x-detail label="Preço" :value="$booking->formatted_price" />
                 <x-detail label="Status" :value="$booking->status->label()" />
-                <div class="col-span-3">
-                    <x-detail label="Observações" :value="$booking->notes" />
-                </div>
                 <x-detail label="Agendado em" :value="$booking->created_at->format('d/m/Y H:i')" />
+                @if ($booking->notes)
+                    <x-detail label="Observações" :value="$booking->notes" class="col-span-2" />
+                @endif
             </div>
             @if ($booking->status->nextStatus() && !auth()->user()->can('isAdmin'))
                 <x-slot:footer>
                     <div class="flex gap-2 justify-between">
                         <x-ts-button text="Reagendar" :color="App\Enums\BookingStatusEnum::from('rescheduled')->color()"
-                            x-on:click="$dispatch('get-rebooking-data', [{{ $booking->id }}])"
-                            sm />
+                            x-on:click="$dispatch('get-rebooking-data', [{{ $booking->id }}])" sm />
                         <div class="flex gap-2">
                             <x-ts-button text="Cancelar" :color="App\Enums\BookingStatusEnum::from('cancelled')->color()"
                                 x-on:click="$dispatch('change-status', [{{ $booking->id }}, '{{ App\Enums\BookingStatusEnum::from('cancelled')->value }}'])"
@@ -100,7 +99,7 @@ new class extends Component {
             @endif
         </x-ts-card>
 
-        @island(lazy: true, name: 'timeline')
+        @island(name: 'timeline')
             @placeholder
                 <x-placeholder quantity="3" />
             @endplaceholder
@@ -108,7 +107,7 @@ new class extends Component {
         @endisland
 
         @island()
-            <livewire:bookings.change-status />
+            <livewire:bookings.change-status @updated="$refresh" />
         @endisland
     </div>
     @island()

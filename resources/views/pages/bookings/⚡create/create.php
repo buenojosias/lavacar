@@ -282,7 +282,11 @@ new class extends Component
 
             $booking = Booking::create($data);
             $booking->statusHistories()->create([ 'status' => 'confirmed', 'user_id' => auth()->id(), 'origin' => 'dashboard' ]);
-            $this->toast()->success('Serviço agendado com sucesso!')->send();
+            $this->toast()
+                ->success('Serviço agendado com sucesso!')
+                ->confirm('Ver serviço', 'goToBooking', $booking->id)
+                ->timeout(seconds: 10)
+                ->send();
             $this->resetForm();
 
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -290,6 +294,11 @@ new class extends Component
         } catch (\Throwable $th) {
             $this->toast()->error('Erro ao agendar serviço. Tente novamente.')->send();
         }
+    }
+
+    public function goToBooking($bookingId)
+    {
+        $this->redirect(route('bookings.show', $bookingId));
     }
 
     private function resetForm()
