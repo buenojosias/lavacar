@@ -88,8 +88,7 @@ new class extends Component {
                             x-on:click="$dispatch('get-rebooking-data', [{{ $booking->id }}])" sm />
                         <div class="flex gap-2">
                             <x-ts-button text="Cancelar" :color="App\Enums\BookingStatusEnum::from('cancelled')->color()"
-                                x-on:click="$dispatch('change-status', [{{ $booking->id }}, '{{ App\Enums\BookingStatusEnum::from('cancelled')->value }}'])"
-                                sm />
+                                x-on:click="$dispatch('get-cancel-data', [{{ $booking->id }}])" sm />
                             <x-ts-button text="No show" :color="App\Enums\BookingStatusEnum::from('no_show')->color()"
                                 x-on:click="$dispatch('change-status', [{{ $booking->id }}, '{{ App\Enums\BookingStatusEnum::from('no_show')->value }}'])"
                                 sm />
@@ -111,6 +110,9 @@ new class extends Component {
         @endisland
     </div>
     @island()
-        <livewire:bookings.rebooking />
+        <livewire:bookings.rebooking @updated="$refresh" />
+    @endisland
+    @island()
+        <livewire:bookings.cancel @updated="$refresh" />
     @endisland
 </div>

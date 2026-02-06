@@ -70,12 +70,12 @@ new class extends Component
             $this->oldBooking->update(['status' => 'rescheduled']);
             $booking->statusHistories()->create([ 'status' => 'confirmed', 'user_id' => auth()->id(), 'origin' => 'dashboard' ]);
             $this->oldBooking->statusHistories()->create([ 'status' => 'rescheduled', 'user_id' => auth()->id(), 'origin' => 'dashboard' ]);
-            $this->toast()->success('Serviço agendado com sucesso!')->send();
+            $this->toast()->success('Serviço agendado com sucesso.')->send();
             $this->dispatch('updated');
             $this->reset();
             $this->modal = false;
         } catch (\Throwable $th) {
-            $this->toast()->error('Erro ao agendar serviço!')->send();
+            $this->toast()->error('Erro ao agendar serviço.')->send();
         }
     }
 };

@@ -99,7 +99,7 @@ new class extends Component {
                                 <x-ts-dropdown.items text="Reagendar"
                                     x-on:click="$dispatch('get-rebooking-data', [{{ $booking->id }}])" />
                                 <x-ts-dropdown.items text="Cancelar" separator
-                                    x-on:click="$dispatch('change-status', [{{ $booking->id }}, '{{ App\Enums\BookingStatusEnum::from('cancelled')->value }}'])" />
+                                    x-on:click="$dispatch('get-cancel-data', [{{ $booking->id }}])" />
                                 <x-ts-dropdown.items text="No show"
                                     x-on:click="$dispatch('change-status', [{{ $booking->id }}, '{{ App\Enums\BookingStatusEnum::from('no_show')->value }}'])" />
                             </x-ts-dropdown>
@@ -116,5 +116,8 @@ new class extends Component {
     @endisland()
     @island()
         <livewire:bookings.rebooking @updated="$refresh()" />
+    @endisland
+    @island()
+        <livewire:bookings.cancel @updated="$refresh()" />
     @endisland
 </div>
