@@ -26,7 +26,7 @@ new class extends Component
     {
         if (!isset($this->booking)) {
             $this->modal = false;
-            $this->dialog()->error('Erro ao cancelar serviço.')->send();
+            $this->dialog()->error('Erro ao cancelar agendamento.')->send();
             return;
         }
         // $data = $this->validate([
@@ -41,20 +41,20 @@ new class extends Component
                 'user_id' => auth()->id(),
                 'origin' => 'dashboard',
             ]);
-            $this->toast()->success('Serviço cancelado com sucesso.')->send();
+            $this->toast()->success('Agendamento cancelado com sucesso.')->send();
             $this->dispatch('updated');
             $this->reset();
             $this->modal = false;
         } catch (\Throwable $th) {
             $this->modal = false;
-            $this->toast()->error('Erro ao cancelar serviço.')->send();
+            $this->toast()->error('Erro ao cancelar agendamento.')->send();
         }
     }
 };
 ?>
 
-<x-ts-modal wire title="Cancelar serviço" size="sm">
-    <p class="mb-4">Tem certeza que deseja cancelar este serviço?</p>
+<x-ts-modal wire title="Cancelar agendamento" size="sm">
+    <p class="mb-4">Tem certeza que deseja cancelar este agendamento?</p>
     <x-ts-textarea
         label="Motivo do cancelamento"
         hint="Opcional"

@@ -27,12 +27,7 @@
                     <x-ts-theme-switch only-icons />
                 </x-slot:left>
                 <x-slot:right>
-                    <x-ts-dropdown text="Hello, {{ auth()->user()->name }}!">
-                        <!-- <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <x-ts-dropdown.items text="Logout" onclick="event.preventDefault(); this.closest('form').submit();" />
-                        </form> -->
-                    </x-ts-dropdown>
+                    <livewire:header-dropdown />
                 </x-slot:right>
             </x-ts-layout.header>
         </x-slot:header>
@@ -48,7 +43,7 @@
                     :route="route('bookings.index')" />
                 <x-ts-side-bar.item text="Clientes" icon="phosphor.users-three-light" :current="request()->routeIs('customers.*')"
                     :route="route('customers.index')" />
-                <x-ts-side-bar.item text="Serviços" icon="phosphor.wrench-light" :current="request()->routeIs('services.*')"
+                <x-ts-side-bar.item text="Serviços" icon="phosphor.shower-light" :current="request()->routeIs('services.*')"
                     :route="route('services.index')" />
                 </x-ts-side-bar>
         </x-slot:menu>

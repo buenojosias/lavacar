@@ -19,6 +19,7 @@ new class extends Component {
             ->with('serviceVariant.serviceType', 'companyVehicle')
             ->where('scheduled_date', '>=', now()->format('Y-m-d'))
             ->orderBy('starts_at', 'asc')
+            ->limit(3)
             ->get();
     }
 };
