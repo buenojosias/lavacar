@@ -1,6 +1,7 @@
 <?php
 
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component {
@@ -9,6 +10,12 @@ new class extends Component {
     public function mount($booking)
     {
         $this->booking = $booking;
+    }
+
+    #[On('updated')]
+    public function refresh()
+    {
+        //
     }
 
     #[Computed]
@@ -20,6 +27,7 @@ new class extends Component {
 ?>
 
 <div>
+    @dump(time())
     <x-ts-card header="Timeline">
         <div class="relative ml-3 border-l-2 border-gray-200 dark:border-gray-600">
             @foreach ($this->steps as $step)

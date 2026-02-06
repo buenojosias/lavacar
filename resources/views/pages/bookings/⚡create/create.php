@@ -280,7 +280,8 @@ new class extends Component
             //     'status' => 'confirmed',
             // ]);
 
-            Booking::create($data);
+            $booking = Booking::create($data);
+            $booking->statusHistories()->create([ 'status' => 'confirmed', 'user_id' => auth()->id(), 'origin' => 'dashboard' ]);
             $this->toast()->success('Serviço agendado com sucesso!')->send();
             $this->resetForm();
 

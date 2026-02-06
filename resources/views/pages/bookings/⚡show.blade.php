@@ -65,7 +65,7 @@ new class extends Component {
                     <x-detail label="Veículo" :value="$booking->companyVehicle->vehicle->brand_model" />
                 </div>
             </x-slot:header>
-            <div class="detail g-3">
+            <div class="detail g-2">
                 <x-detail label="Placa" :value="$booking->companyVehicle->vehicle->plate" />
                 <x-detail label="Categoria" :value="$booking->companyVehicle->vehicle->category" />
                 <x-detail label="Cor" :value="$booking->companyVehicle->vehicle->color" />
@@ -85,7 +85,7 @@ new class extends Component {
                 <x-slot:footer>
                     <div class="flex gap-2 justify-between">
                         <x-ts-button text="Reagendar" :color="App\Enums\BookingStatusEnum::from('rescheduled')->color()"
-                            x-on:click="$dispatch('change-status', [{{ $booking->id }}, '{{ App\Enums\BookingStatusEnum::from('rescheduled')->value }}'])"
+                            x-on:click="$dispatch('get-rebooking-data', [{{ $booking->id }}])"
                             sm />
                         <div class="flex gap-2">
                             <x-ts-button text="Cancelar" :color="App\Enums\BookingStatusEnum::from('cancelled')->color()"
@@ -108,7 +108,10 @@ new class extends Component {
         @endisland
 
         @island()
-            <livewire:bookings.change-status @updated="$refresh()" />
+            <livewire:bookings.change-status />
         @endisland
     </div>
+    @island()
+        <livewire:bookings.rebooking />
+    @endisland
 </div>
