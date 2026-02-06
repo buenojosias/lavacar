@@ -21,6 +21,21 @@ export default {
             fontFamily: {
                 sans: ['Andrich', ...defaultTheme.fontFamily.sans],
             },
+            "colors": {
+                "primary": {
+                    50: "#EFF3FF",
+                    100: "#E0E8FE",
+                    200: "#BFD2FE",
+                    300: "#A1BEFD",
+                    400: "#79A9FC",
+                    500: "#4593FC",
+                    600: "#187FE7",
+                    700: "#0F5EAE",
+                    800: "#074079",
+                    900: "#022245",
+                    950: "#011630"
+                }
+            }
         },
     },
 

@@ -31,7 +31,7 @@ new class extends Component {
                 <x-ts-badge :text="$booking->status->label()" :color="$booking->status->color()" />
             </x-list-item>
         @empty
-            Nenhum agendamento encontrado
+            <x-empty title="Nenhum agendamento encontrado" />
         @endforelse
     </div>
     <x-slot:footer>

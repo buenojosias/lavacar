@@ -25,7 +25,7 @@ new class extends Component {
                     <x-ts-badge :text="$c_vehicle->vehicle->plate" color="amber" light />
                 </x-list-item>
             @empty
-                Nenhum veículo cadastrado.
+                <x-empty title="Nenhum veículo cadastrado" />
             @endforelse
         </div>
         @if (auth()->user()->role === 'PARTNER')

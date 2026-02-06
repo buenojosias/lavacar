@@ -73,7 +73,7 @@ new class extends Component {
     </div>
 
     <div class="space-y-3 mt-6">
-        @foreach ($this->bookings as $key => $booking)
+        @forelse ($this->bookings ?? [] as $key => $booking)
             <div
                 class="p-3 flex flex-col lg:flex-row justify-between gap-2 bg-white dark:bg-dark-700 flex w-full rounded-md shadow-md text-secondary-700 dark:text-dark-300 border-l-4 border-{{ $booking->status->color() }}-500">
                 <div class="flex-1 flex gap-3 items-start">
@@ -106,7 +106,9 @@ new class extends Component {
                     </div>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <x-empty icon="x-circle" description="Nenhum agendamento encontrado par a data selecionada" />
+        @endforelse
     </div>
     @island()
     <livewire:bookings.change-status @updated="$refresh()" />
