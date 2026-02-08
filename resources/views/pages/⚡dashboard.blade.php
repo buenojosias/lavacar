@@ -31,7 +31,7 @@ new class extends Component {
                     <div class="text-xl font-bold">{{ $company->name }}</div>
                 </div>
                 <div class="text-center">
-                    <x-ts-button text="Gerenciar" flat />
+                    <x-ts-button text="Gerenciar" href="{{ route('companies.own') }}" wire:navigate flat />
                 </div>
             </div>
         </x-ts-card>

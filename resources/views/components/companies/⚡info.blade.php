@@ -63,7 +63,7 @@ new class extends Component {
         <x-detail label="Serviços simultâneos" value="{{ $company->simultaneous_services }}" />
         @can('isOwner')
             <x-slot:footer>
-                <x-ts-button text="Editar" wire:click="edit" />
+                <x-ts-button text="Editar" wire:click="edit" flat />
             </x-slot:footer>
         @endcan
     </x-ts-card>

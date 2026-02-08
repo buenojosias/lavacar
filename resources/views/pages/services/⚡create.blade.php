@@ -176,6 +176,7 @@ new #[Title('Cadastrar serviço')] class extends Component {
             <div class="flex justify-end gap-3">
                 <x-ts-button 
                     href="{{ route('services.index') }}" 
+                    wire:navigate
                     text="Cancelar" 
                     color="white"
                 />

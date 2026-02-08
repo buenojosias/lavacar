@@ -25,12 +25,15 @@ new class extends Component {
             @island
                 <livewire:companies.address :company="$company" />
             @endisland
-            @island
+            @island(lazy: true)
+                @placeholder
+                    <x-placeholder />
+                @endplaceholder
                 <livewire:companies.services :company="$company" />
             @endisland
         </div>
-        {{-- <div class="space-y-6">
-            <x-ts-card header="Horários de atendimento">
+        <div class="space-y-6">
+            {{-- <x-ts-card header="Horários de atendimento">
                 <ul class="space-y-2">
                     @foreach ($hours->groupBy('weekday') as $day => $hours)
                         <li class="flex justify-between items-center gap-2">
@@ -47,23 +50,16 @@ new class extends Component {
                         </li>
                     @endforeach
                 </ul>
-            </x-ts-card>
-            <x-ts-card header="Estatísticas">
-                <div class="detail">
-                    <x-detail label="Clientes" :value="$company->customers->count()" />
-                </div>
-                <div class="grid grid-cols-2 detail my-4">
-                    <x-detail label="Ativo" :bool="$company->is_active ? 'Y' : 'N'" />
-                    <x-detail label="Visível" :bool="$company->is_visible ? 'Y' : 'N'" />
-                </div>
-                <div class="detail">
-                    <x-detail label="Total de serviços" value="XXX" />
-                    <x-detail label="Avaliações" value="{{ $company->rating_count }} ({{ $company->rating_avg }})" />
-                </div>
-            </x-ts-card>
+            </x-ts-card> --}}
+            @island(lazy: true)
+                @placeholder
+                    <x-placeholder />
+                @endplaceholder
+                <livewire:companies.stats :company="$company" @saved="$refresh" />
+            @endisland
             <div>
-                <x-ts-button text="Ver agendamentos" :href="route('companies.bookings', $company)" class="w-full" color="slate" />
+                <x-ts-button text="Ver agendamentos" :href="route('companies.bookings', $company)" wire:navigate class="w-full" color="slate" />
             </div>
         </div>
-    </div> --}}
     </div>
+</div>

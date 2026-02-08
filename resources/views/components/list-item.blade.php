@@ -1,10 +1,10 @@
-@props(['title', 'subtitle' => null, 'description' => null, 'href' => null])
+@props(['title', 'subtitle' => null, 'description' => null, 'href' => null, 'navigate' => false])
 
 <div
     class="flex justify-between gap-3 p-3 rounded-lg border border-gray-200 dark:border-gray-600 shadow-sm hover:bg-gray-200/30 dark:hover:bg-gray-600/30 transition-colors">
     <div class="flex-1">
         @if ($href)
-            <a href="{{ $href }}" class="flex-1">
+            <a href="{{ $href }}" class="flex-1" {{ $navigate ? 'wire:navigate' : '' }}>
         @endif
         <p class="font-semibold dark:text-gray-200 leading-6">{{ $title }}</p>
         @if ($subtitle)

@@ -75,7 +75,7 @@ new class extends Component {
             MAPA AQUI
         </div>
         <x-slot:footer>
-            <x-ts-button text="Editar" wire:click="edit" />
+            <x-ts-button text="Editar" wire:click="edit" flat />
         </x-slot:footer>
     </x-ts-card>
     @can('isOwner')

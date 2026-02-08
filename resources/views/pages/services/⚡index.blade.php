@@ -72,7 +72,7 @@ new #[Title('Serviços')] class extends Component {
                         <p class="text-sm text-gray-500 italic">Nenhuma variante cadastrada.</p>
                     @endif
                     <x-slot:footer>
-                        <x-ts-button text="Detalhes" :href="route('services.show', $serviceType)" flat />
+                        <x-ts-button text="Detalhes" :href="route('services.show', $serviceType)" wire:navigate flat />
                         <x-ts-button text="Editar" href="#" flat />
                     </x-slot:footer>
                 </x-ts-card>
