@@ -11,7 +11,6 @@ new class extends Component {
     public function mount($company = null)
     {
         $this->company = Company::findOrFail($company ?? auth()->user()->selected_company_id);
-        $this->hours = $this->company->hours()->orderBy('weekday')->get();
     }
 };
 ?>
@@ -33,24 +32,9 @@ new class extends Component {
             @endisland
         </div>
         <div class="space-y-6">
-            {{-- <x-ts-card header="Horários de atendimento">
-                <ul class="space-y-2">
-                    @foreach ($hours->groupBy('weekday') as $day => $hours)
-                        <li class="flex justify-between items-center gap-2">
-                            <div class="flex-1">
-                                <b>{{ \App\Enums\WeekdayEnum::from($day)->label() }}</b><br>
-                                <ul class="ml-2">
-                                    @foreach ($hours as $hour)
-                                        <li>{{ $hour->opens_at->format('H:i') }} -
-                                            {{ $hour->closes_at->format('H:i') }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                            <div>ABC</div>
-                        </li>
-                    @endforeach
-                </ul>
-            </x-ts-card> --}}
+            @island
+                <livewire:companies.weekdays :company="$company" />
+            @endisland
             @island(lazy: true)
                 @placeholder
                     <x-placeholder />
