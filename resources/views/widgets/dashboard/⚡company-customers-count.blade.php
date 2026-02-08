@@ -14,4 +14,4 @@ new class extends Component
 };
 ?>
 
-<x-ts-stats :number="$this->customers" title="Clientes" />
+<x-ts-stats :number="$this->customers" title="Clientes" :href="route('customers.index')" wire:navigate />

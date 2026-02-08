@@ -12,22 +12,26 @@ new class extends Component {
         $this->booking = $booking;
     }
 
-    // #[On('updated')]
-    // public function refresh()
-    // {
-    //     return $this->refresh();
-    // }
+    #[On('updated')]
+    public function refresh()
+    {
+        //
+    }
 
     #[Computed]
     public function steps()
     {
         return $this->booking->statusHistories()->orderBy('created_at', 'asc')->get();
     }
+
+    public function render()
+    {
+        return $this->view();
+    }
 };
 ?>
 
 <div>
-    @dump(time())
     <x-ts-card header="Timeline">
         <div class="relative ml-3 border-l-2 border-gray-200 dark:border-gray-600">
             @foreach ($this->steps as $step)

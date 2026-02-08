@@ -34,17 +34,17 @@
 
         <x-slot:menu>
             <x-ts-side-bar>
-                <x-ts-side-bar.item text="Home" icon="phosphor.house" :current="request()->routeIs('dashboard')" :route="route('dashboard')" />
+                <x-ts-side-bar.item text="Home" icon="phosphor.house" :current="request()->routeIs('dashboard')" :route="route('dashboard')" wire:navigate/>
                 @can('isAdmin')
                     <x-ts-side-bar.item text="Estabelecimentos" icon="phosphor.building-light" :current="request()->routeIs('companies.*')"
-                        :route="route('companies.index')" />
+                        :route="route('companies.index')" wire:navigate/>
                 @endcan
                 <x-ts-side-bar.item text="Agendamentos" icon="phosphor.calendar-dots-light" :current="request()->routeIs('bookings.*')"
-                    :route="route('bookings.index')" />
+                    :route="route('bookings.index')" wire:navigate />
                 <x-ts-side-bar.item text="Clientes" icon="phosphor.users-three-light" :current="request()->routeIs('customers.*')"
-                    :route="route('customers.index')" />
+                    :route="route('customers.index')" wire:navigate />
                 <x-ts-side-bar.item text="Serviços" icon="phosphor.shower-light" :current="request()->routeIs('services.*')"
-                    :route="route('services.index')" />
+                    :route="route('services.index')" wire:navigate />
                 </x-ts-side-bar>
         </x-slot:menu>
         {{ $slot }}

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Booking;
 use App\Models\Company;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -44,14 +45,19 @@ class BookingSeeder extends Seeder
                     'starts_at' => $startsAt,
                     'ends_at' => $endsAt,
                     'price' => $serviceVariant['price'],
-                    'status' => Arr::random(['pending', 'confirmed']),
+                    'status' => 'confirmed',
                     'notes' => fake()->randomElement([
                         null,
                         fake()->sentence(),
                     ]),
                 ];
 
-                Booking::create($booking);
+                $booking = Booking::create($booking);
+                $booking->statusHistories()->create([
+                    'user_id' => User::where('selected_company_id', $company->id)->first()->id,
+                    'status' => 'confirmed',
+                    'origin' => 'dashboard',
+                ]);
             }
         }
     }

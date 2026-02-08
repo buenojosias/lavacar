@@ -98,12 +98,14 @@ new class extends Component {
             @endif
         </x-ts-card>
 
-        @island(name: 'timeline')
+        {{-- @island(name: 'timeline')
             @placeholder
                 <x-placeholder quantity="3" />
             @endplaceholder
             <livewire:bookings.timeline :booking="$booking" />
-        @endisland
+        @endisland --}}
+
+        {{-- <livewire:bookings.timeline :booking="$booking" /> --}}
 
         @island()
             <livewire:bookings.change-status @updated="$refresh" />

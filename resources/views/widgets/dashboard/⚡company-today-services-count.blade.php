@@ -15,4 +15,4 @@ new class extends Component {
 };
 ?>
 
-<x-ts-stats :number="$this->services" title="Serviços para hoje" />
+<x-ts-stats :number="$this->services" title="Serviços para hoje" :href="route('bookings.index')" wire:navigate />
