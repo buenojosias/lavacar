@@ -16,6 +16,8 @@ Route::middleware('auth')->group(function () {
         Route::livewire('/estabelecimentos/{company}/agendamentos', 'pages::bookings.index')->name('companies.bookings');
     });
 
+    Route::livewire('/estabelecimento', 'pages::companies.show')->name('companies.own');
+
     Route::livewire('/clientes', 'pages::customers.index')->name('customers.index');
     Route::livewire('/clientes/cadastro', 'pages::customers.create')->name('customers.create');
     Route::livewire('/clientes/{customer}', 'pages::customers.show')->name('customers.show');

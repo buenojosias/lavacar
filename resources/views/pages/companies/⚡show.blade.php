@@ -8,10 +8,10 @@ new class extends Component {
     public $customers_count;
     public $hours = [];
 
-    public function mount(Company $company)
+    public function mount($company = null)
     {
-        $this->company = $company;
-        $this->hours = $company->hours()->orderBy('weekday')->get();
+        $this->company = Company::findOrFail($company ?? auth()->user()->selected_company_id);
+        $this->hours = $this->company->hours()->orderBy('weekday')->get();
     }
 };
 ?>
@@ -19,30 +19,17 @@ new class extends Component {
 <div>
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         <div class="lg:col-span-2 space-y-6">
-            <x-ts-card header="Informações do estabelecimento" class="detail g-2">
-                <x-detail label="Nome" value="{{ $company->name }}" />
-                <x-detail label="CNPJ" value="{{ $company->cnpj }}" />
-                <x-detail label="Telefone" value="{{ $company->whatsapp }}" />
-                <x-detail label="Serviços simultâneos" value="{{ $company->simultaneous_services }}" />
-            </x-ts-card>
-            <x-ts-card header="Localização" class="detail g-2">
-                <x-detail label="Endereço" value="{{ $company->address }}" />
-                <x-detail label="Bairro" value="{{ $company->district }}" />
-                <x-detail label="Cidade" value="{{ $company->city->name }}" />
-                <x-detail label="CEP" value="{{ $company->zipcode }}" />
-                <x-detail label="Latitude" value="{{ $company->latitude }}" />
-                <x-detail label="Longitude" value="{{ $company->longitude }}" />
-                <div class="col-span-2 text-red-500">
-                    MAPA AQUI
-                </div>
-            </x-ts-card>
-            <x-ts-card header="Serviço disponíveis" class="detail">
-                @foreach ($company->serviceTypes()->get() as $service)
-                    <x-detail :label="$service->name" :value="$service->description" />
-                @endforeach
-            </x-ts-card>
+            @island
+                <livewire:companies.info :company="$company" />
+            @endisland
+            @island
+                <livewire:companies.address :company="$company" />
+            @endisland
+            @island
+                <livewire:companies.services :company="$company" />
+            @endisland
         </div>
-        <div class="space-y-6">
+        {{-- <div class="space-y-6">
             <x-ts-card header="Horários de atendimento">
                 <ul class="space-y-2">
                     @foreach ($hours->groupBy('weekday') as $day => $hours)
@@ -78,5 +65,5 @@ new class extends Component {
                 <x-ts-button text="Ver agendamentos" :href="route('companies.bookings', $company)" class="w-full" color="slate" />
             </div>
         </div>
+    </div> --}}
     </div>
-</div>
