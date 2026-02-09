@@ -30,8 +30,4 @@ new class extends Component {
             @endforeach
         </div>
     </x-ts-card>
-
-    <x-ts-modal id="add-hour-modal">
-        {{ $weekday }}
-    </x-ts-modal>
 </div>
