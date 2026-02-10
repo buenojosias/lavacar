@@ -37,6 +37,6 @@ new class extends Component {
     </div>
     <x-slot:footer>
         <x-ts-button text="Agendar" color="primary" />
-        <x-ts-button text="Ver todos" color="secondary" />
+        <x-ts-button text="Ver todos" :href="route('customers.bookings', $customer)" color="secondary" />
     </x-slot:footer>
 </x-ts-card>

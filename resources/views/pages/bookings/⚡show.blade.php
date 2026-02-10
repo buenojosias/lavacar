@@ -105,7 +105,7 @@ new class extends Component {
             <livewire:bookings.timeline :booking="$booking" />
         @endisland --}}
 
-        {{-- <livewire:bookings.timeline :booking="$booking" /> --}}
+        <livewire:bookings.timeline :booking="$booking" />
 
         @island()
             <livewire:bookings.change-status @updated="$refresh" />

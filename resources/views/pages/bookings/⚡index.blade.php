@@ -1,12 +1,14 @@
 <?php
 
 use App\Models\Booking;
+use App\Models\Customer;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
 new class extends Component {
     public $companyId;
+    public $customerId;
 
     #[Url(as: 'data')]
     public $selectedDate;
@@ -16,8 +18,9 @@ new class extends Component {
 
     public $statuses = [];
 
-    public function mount($company = null)
+    public function mount($company = null, $customer = null)
     {
+        $this->customerId = $customer;
         $this->selectedDate = now()->format('Y-m-d');
         $this->statuses = collect(\App\Enums\BookingStatusEnum::cases())
             ->map(function ($status) {
@@ -34,16 +37,31 @@ new class extends Component {
     }
 
     #[Computed]
+    public function customer()
+    {
+        if (!$this->customerId) {
+            return null;
+        }
+
+        return Customer::find($this->customerId);
+    }
+
+    #[Computed]
     public function bookings()
     {
-        return $bookings = Booking::query()
+        return Booking::query()
             ->when($this->companyId, function ($query) {
                 $query->where('company_id', $this->companyId);
             })
             ->when($this->status, function ($query) {
                 $query->where('status', $this->status);
             })
-            ->where('scheduled_date', $this->selectedDate)
+            ->when($this->customerId, function ($query) {
+                $query->where('customer_id', $this->customerId);
+            })
+            ->when(!$this->customerId, function ($query) {
+                $query->where('scheduled_date', $this->selectedDate);
+            })
             ->with('companyVehicle', 'serviceVariant.serviceType')
             ->orderBy('starts_at')
             ->get();
@@ -60,25 +78,33 @@ new class extends Component {
 
 <div>
     <div class="page-header">
-        <h2>Agendamentos</h2>
+        <h2>{{ $this->customerId ? 'Agendamentos do cliente' : 'Agendamentos' }}
+            @if ($this->customerId)
+                <br><small>{{ $this->customer->name }}</small>
+            @endif
+        </h2>
         <x-ts-button :href="route('bookings.create')" text="Novo agendamento" />
     </div>
 
-    <div class="w-full md:w-1/2 flex items-center gap-2 text-sm font-semibold text-secondary-800 dark:text-dark-200">
-        <div class="w-1/2">
-            <x-ts-date wire:model.live="selectedDate" format="DD/MM/YYYY" helpers />
+    @if (!$this->customerId)
+        <div class="w-full md:w-1/2 flex items-center gap-2 text-sm font-semibold text-secondary-800 dark:text-dark-200">
+            <div class="w-1/2">
+                <x-ts-date wire:model.live="selectedDate" format="DD/MM/YYYY" helpers />
+            </div>
+            <div class="w-1/2">
+                <x-ts-select.native wire:model.live="status" :options="$statuses" />
+            </div>
         </div>
-        <div class="w-1/2">
-            <x-ts-select.native wire:model.live="status" :options="$statuses" />
-        </div>
-    </div>
-
+    @endif
     <div class="space-y-3 mt-6">
         @forelse ($this->bookings ?? [] as $key => $booking)
             <div
                 class="p-3 flex flex-col lg:flex-row justify-between gap-2 bg-white dark:bg-dark-700 flex w-full rounded-md shadow-md text-secondary-700 dark:text-dark-300 border-l-4 border-{{ $booking->status->color() }}-500">
                 <div class="flex-1 flex gap-3 items-start">
                     <div class="w-14 text-right pr-3 border-r border-gray-300 dark:border-dark-600 font-semibold">
+                        @if ($this->customerId)
+                            {{ $booking->scheduled_date->format('d/m') }}
+                        @endif
                         {{ $booking->starts_at->format('H:i') }}</div>
                     <a class="flex-1 space-y-0.5" href="{{ route('bookings.show', $booking) }}">
                         <p class="font-semibold">{{ $booking->serviceVariant->serviceType->name }}</p>
@@ -112,7 +138,7 @@ new class extends Component {
         @endforelse
     </div>
     @island()
-        <livewire:bookings.change-status @updated="$refresh()" />
+    <livewire:bookings.change-status @updated="$refresh()" />
     @endisland()
     @island()
         <livewire:bookings.rebooking @updated="$refresh()" />
