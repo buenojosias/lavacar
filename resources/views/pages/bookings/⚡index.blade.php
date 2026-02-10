@@ -83,7 +83,11 @@ new class extends Component {
                 <br><small>{{ $this->customer->name }}</small>
             @endif
         </h2>
-        <x-ts-button :href="route('bookings.create')" text="Novo agendamento" />
+        @if ($this->customerId)
+            <x-ts-button :href="route('customers.bookings.create', $this->customerId)" text="Novo agendamento" />
+        @else
+            <x-ts-button :href="route('bookings.create')" text="Novo agendamento" />
+        @endif
     </div>
 
     @if (!$this->customerId)

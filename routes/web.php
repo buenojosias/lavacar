@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::livewire('/clientes/cadastro', 'pages::customers.create')->name('customers.create');
     Route::livewire('/clientes/{customer}', 'pages::customers.show')->name('customers.show');
     Route::livewire('/clientes/{customer}/agendamentos', 'pages::bookings.index')->name('customers.bookings');
+    Route::livewire('/clientes/{customer}/agendar', 'pages::bookings.create')->name('customers.bookings.create');
 
     Route::livewire('/agendamentos', 'pages::bookings.index')->name('bookings.index');
     Route::livewire('/agendamentos/cadastro', 'pages::bookings.create')->name('bookings.create');

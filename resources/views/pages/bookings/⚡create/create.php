@@ -35,7 +35,7 @@ new class extends Component
 
     public $weekdays = [];
 
-    public function mount()
+    public function mount($customer = null)
     {
         $openingHours = OpeningHours::query()
             ->where('company_id', auth()->user()->selected_company_id)
@@ -44,6 +44,8 @@ new class extends Component
         $this->weekdays = $openingHours->map(fn($openingHour) => [
             'value' => $openingHour->weekday->value,
         ]);
+
+        $this->customer_id = $customer;
 
         // Load initial options if values are already set (e.g., from validation errors)
         if ($this->customer_id) {
