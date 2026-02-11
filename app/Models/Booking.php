@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use App\Enums\BookingStatusEnum;
+use App\Enums\PaymentMethodEnum;
 use App\Models\Scopes\CompanyScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Booking extends Model
@@ -30,6 +32,9 @@ class Booking extends Model
         'ends_at',
         'price',
         'status',
+        'payment_status',
+        'payment_method',
+        'paid_at',
         'notes',
     ];
 
@@ -38,6 +43,8 @@ class Booking extends Model
         'starts_at' => 'datetime',
         'ends_at' => 'datetime',
         'status' => BookingStatusEnum::class,
+        'payment_method' => PaymentMethodEnum::class,
+        'paid_at' => 'datetime',
     ];
 
     public function company(): BelongsTo
@@ -68,6 +75,11 @@ class Booking extends Model
     public function nextStatus(): ?BookingStatusEnum
     {
         return $this->status->nextStatus();
+    }
+
+    public function transaction(): MorphOne
+    {
+        return $this->morphOne(Transaction::class, 'transactionable');
     }
 
     public function getFormattedDayAttribute()

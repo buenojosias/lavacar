@@ -17,8 +17,11 @@ return new class extends Migration
             $table->date('scheduled_date');
             $table->dateTime('starts_at');
             $table->dateTime('ends_at');
-            $table->integer('price');
             $table->string('status', 20)->default('pending');
+            $table->integer('price');
+            $table->string('payment_status', 20)->default('pending');
+            $table->string('payment_method', 20)->nullable();
+            $table->dateTime('paid_at')->nullable();
             $table->mediumText('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
