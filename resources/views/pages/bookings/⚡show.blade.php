@@ -41,6 +41,13 @@ new class extends Component {
                         <x-ts-button :text="$booking->status->nextStatus()->actionLabel()"
                             x-on:click="$dispatch('change-status', [{{ $booking->id }}, '{{ $booking->status->nextStatus()->value }}'])" />
                     </div>
+                @elseif($booking->payment_status === 'paid')
+                    <x-ts-badge text="Pago" lg round color="green" />
+                @elseif($booking->status->value == 'picked_up' && !auth()->user()->can('isAdmin'))
+                    <div class="flex gap-1">
+                        <x-ts-button text="Registrar pagamento" color="green"
+                            x-on:click="$dispatch('open-payment-modal')" loading />
+                    </div>
                 @endif
             </div>
         </x-slot:footer>
@@ -116,5 +123,8 @@ new class extends Component {
     @endisland
     @island()
         <livewire:bookings.cancel @updated="$refresh" />
+    @endisland
+    @island()
+        <livewire:register-payment @saved="$refresh" :$booking />
     @endisland
 </div>

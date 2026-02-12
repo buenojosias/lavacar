@@ -45,7 +45,9 @@
                     :route="route('customers.index')" wire:navigate />
                 <x-ts-side-bar.item text="Serviços" icon="phosphor.shower-light" :current="request()->routeIs('services.*')"
                     :route="route('services.index')" wire:navigate />
-                </x-ts-side-bar>
+                <x-ts-side-bar.item text="Financeiro" icon="phosphor.money-light" :current="request()->routeIs('financial.*')"
+                    :route="route('financial.index')" wire:navigate />
+            </x-ts-side-bar>
         </x-slot:menu>
         {{ $slot }}
     </x-ts-layout>

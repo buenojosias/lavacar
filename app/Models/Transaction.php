@@ -2,12 +2,20 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\CompanyScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Transaction extends Model
 {
+    protected static function booted()
+    {
+        parent::booted();
+
+        static::addGlobalScope(new CompanyScope);
+    }
+
     public $timestamps = false;
 
     protected $fillable = [
